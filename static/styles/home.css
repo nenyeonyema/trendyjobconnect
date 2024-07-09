@@ -12,6 +12,7 @@
     --sky-blue: rgb(6, 160, 241);
     --grey-blue: rgb(16, 42, 67);
     --grey-light-blue: rgb(72, 101, 129);
+    --grey-light:  rgb(36, 68, 100);
     --just-light-blue: rgb(232, 232, 233);
     --light-grey-blue: rgb(218, 230, 236);
 }
@@ -29,19 +30,19 @@ body {
 html {
     scroll-behavior: smooth;
 }
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     width: 4px;
-    background: #1dc8f3;
+    background: var(--sea-blue);
 }
   
 ::-webkit-scrollbar-track {
-    background: black;
+    background: var(--light-grey-blue);
 }
   
 ::-webkit-scrollbar-thumb {
-    background: #1dc8f3;
+    background: var(--sea-blue);
     border-radius: 5px;
-}
+} */
 /* Section one  */
 section.con1 {
     background: linear-gradient(var(--light-blue), var(--lighter-blue));
@@ -141,7 +142,123 @@ div.reg {
     width: 100%;
     cursor: pointer;
 }
+/*  Headline */
 
+.headline {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(var(--light-blue),  var(--grey-blue));
+    width: 100%;
+    min-height: 500px;
+}
+div.caption {
+    width: 100%;
+    padding: 10px;
+    padding: 20px;
+    /* border: 1px solid black; */
+}
+
+.sentence {
+    margin-bottom: 20px;
+    margin-top: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.sentence p.p1{
+    font-size: 28px;
+    font-family: sans-serif;
+    font-weight: 700;
+    color: var(--grey-blue);
+    position: relative;
+}
+.sentence p.p1 span{
+    font-size: 28px;
+    font-family: sans-serif;
+    font-weight: 700;
+    white-space: nowrap;
+    color: transparent;
+    background-color: inherit;
+    -webkit-text-stroke: 0.5px white;
+    position: relative;
+}
+
+.sentence p.p1 span::before {
+    content: "Dream Job";
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--grey-blue);
+    -webkit-text-stroke: 0.5px;
+    animation: animate 3s linear infinite;
+}
+@keyframes animate {
+    0%, 10%, 100% {
+        width: 0;
+    }
+    90% {
+        width: 100%;
+    }
+}
+.sentence p.p2{
+    font-size: 14px;
+    font-family: sans-serif;
+    font-weight: 500;
+    color: black;
+    line-height: 1.5;
+    margin-top: 15px;
+    /* position: relative; */
+}
+
+div.search-job {
+    margin-top: 50px;
+}
+.search-job input {
+    width: 60%;
+    height: 30px;
+    border-radius: 50px;
+    border: none;
+}
+
+.search-job button {
+    border: 1px solid black;
+    height: 35px;
+    width: 25%;
+    border-radius: 15px;
+    font-weight: 500;
+    margin-left: 10px;
+    background-color: var(--grey-blue);
+    color: white;
+    cursor: pointer;
+    transition: background-color color  border 0.5s ease-in;
+}
+.search-job button:hover {
+    background-color: var(--lighter-blue);
+    color: var(--grey-blue);
+    border: none;
+}
+
+div.heading-img {
+    width: 100%;
+    padding: 10px;
+}
+
+.div.heading-img img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
+div.heading-img img {
+    width: 100%;
+    margin-top: 15px;
+    min-height: 200px;
+    max-width: 100%;
+}
+section.con2 {
+    background: linear-gradient(var(--grey-blue), var(--lighter-blue));
+}
 
 /* Media Queries for Responsiveness */
 @media only screen and (min-width: 768px) {
@@ -167,11 +284,13 @@ div.reg {
     }
     .nav-list li a {
         text-decoration: none;
-        color: var(--sky-blue);
+        color: black;
+        font-size: 1.1em;
+        font-weight: 550;
         transition: color 0.5s ease-in;
     }
     .nav-list li a:hover {
-        color: black;
+        color: var(--sky-blue);
     }
     div.reg {
         display: flex;
@@ -200,13 +319,51 @@ div.reg {
         background-color: var(--white-blue);
     }
     .btn2 {
-        background-color: var(--white-blue);
+        background-color: var(--grey-light);
+        color: white;
         opacity: 1;
         transition: opacity 0.5s ease-in;
     }
     .btn2:hover {
         opacity: 0.65;
     }
-    
-    
+    /* Landing page captions */
+
+    .sentence p.p1{
+        font-size: 45px;
+    }
+    .sentence p.p1 span{
+        font-size: 45px;
+    }
+    .sentence p.p2{
+        font-size: 18px;
+    }
+    .headline {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        min-height: 500px;
+        padding-top: 20px;
+    }
+    div.caption {
+        width: 50%;
+        padding: 50px 20px;
+        /* border: 1px solid black; */
+        min-height: 500px;
+    }
+    div.heading-img {
+        width: 50%;
+        padding: 20px;
+        min-height: 500px;
+        /* border: 1px solid black; */
+    }
+    div.heading-img img {
+        width: 100%;
+        margin-top: 15px;
+        height: 400px;
+        max-width: 100%;
+    }
+    /* div.heading-img  img {
+        transform: scale(1.2);
+    } */
 }

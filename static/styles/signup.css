@@ -1,0 +1,42 @@
+:root {
+    --clr-1: #052b2f;
+    --clr-2: #073438;
+    --clr-3: #0e4b50;
+    --clr-4: #2d8f85;
+    --clr-5: #637c54;
+    --white-blue: #9ce7f5;
+    --light-blue: #c8edf7;
+    --lighter-blue: #F3F9FF;
+    --sea-blue: rgb(65, 190, 255);
+    --sky-blue: rgb(6, 160, 241);
+    --grey-blue: rgb(16, 42, 67);
+    --grey-light-blue: rgb(72, 101, 129);
+    --grey-light:  rgb(36, 68, 100);
+    --just-light-blue: rgb(232, 232, 233);
+    --light-grey-blue: rgb(218, 230, 236);
+    --dark-light-blue: #001449;
+    --dark-blue: #001848;
+    --deep-purple: #5f0d3b;
+}
+* {
+    font-family: 'Poppins';
+}
+body {
+    background: var(--clr-2);
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+}
+input {
+    width: 300px;
+    height: 30px;
+}
+
+
+/* .container::before {
+    content: '';
+    position: absolute;
+    width: 170px;
+    height: 80%;
+    background: linear-gradient(#222831, #31363F);
+} */

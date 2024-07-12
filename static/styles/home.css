@@ -25,7 +25,8 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", Arial, sans-serif;
-    background-color: var(--lighter-blue);
+    /* background-color: var(--lighter-blue); */
+    background:  var(--light-blue);
     overflow-x: hidden;
 }
 
@@ -52,7 +53,7 @@ section.con1 {
 }
 /* logo styling */
 .con-logo {
-    margin-left: -120px;
+    margin-left: -150px;
 }
 .my-logo {
     transform: scaleX(0.40);
@@ -73,6 +74,9 @@ section.con1 {
     margin: 0 5px;
     padding: 5px 0px;
     color: black;
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
 }
 
 .nav-list {
@@ -153,13 +157,13 @@ div.reg {
 .headline {
     display: flex;
     flex-direction: column;
-    background: linear-gradient(var(--light-blue),  var(--grey-blue));
+    /* border: 1px solid black; */
+    /* background: linear-gradient(var(--light-blue),  var(--grey-blue)); */
     width: 100%;
-    min-height: 500px;
+    min-height: 100vh;
 }
 div.caption {
     width: 100%;
-    padding: 10px;
     padding: 20px;
     /* border: 1px solid black; */
 }
@@ -171,7 +175,7 @@ div.caption {
     overflow: hidden;
 }
 
-.sentence p.p1{
+.sentence p.p1, h2.p1{
     font-size: 28px;
     font-family: sans-serif;
     font-weight: 700;
@@ -185,7 +189,7 @@ div.caption {
     white-space: nowrap;
     color: transparent;
     background-color: inherit;
-    -webkit-text-stroke: 0.5px white;
+    -webkit-text-stroke: 0.5px  var(--grey-blue);
     position: relative;
 }
 
@@ -208,7 +212,7 @@ div.caption {
         width: 100%;
     }
 }
-.sentence p.p2{
+.sentence p.p2, h2.p2{
     font-size: 14px;
     font-family: sans-serif;
     font-weight: 500;
@@ -229,7 +233,6 @@ div.search-job {
 }
 
 .search-job button {
-    border: 1px solid black;
     height: 35px;
     width: 25%;
     border-radius: 15px;
@@ -238,34 +241,204 @@ div.search-job {
     background-color: var(--grey-blue);
     color: white;
     cursor: pointer;
-    transition: background-color color  border 0.5s ease-in;
+    opacity: 1;
+    /* transition: background-color color  border 0.5s ease-in; */
+    transition: opacity 0.5s ease-in;
 }
 .search-job button:hover {
-    background-color: var(--lighter-blue);
-    color: var(--grey-blue);
+    opacity: 0.8;
+    /* background-color: var(--grey-light-blue);
+    color: var(--grey-blue); */
     border: none;
 }
 
 div.heading-img {
+    margin-top: 30px;
     width: 100%;
     padding: 10px;
 }
 
-.div.heading-img img {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-}
 div.heading-img img {
     width: 100%;
+    height: auto;
     margin-top: 15px;
     min-height: 200px;
     max-width: 100%;
 }
+
 section.con2 {
-    background: linear-gradient(var(--grey-blue), var(--lighter-blue));
+    margin-top: -50px;
+    background: linear-gradient(var(--lighter-blue), var(--light-blue));
 }
 
+/* Job openings design */
+div.line-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+div.line-details div.inner-line {
+    height: 0.90px;
+    width: 70px;
+    background-color: var(--grey-blue);
+    margin: 0 20px;
+}
+div.line-details div.inner-name span {
+    font-size: 38px;
+    font-family: 'Caveat', 'cursive';
+    color: var(--grey-blue);
+}
+section.my-services {
+    background-color: var(--light-blue);
+    padding: 100px 20px;
+    min-height: 700px;
+    width: 100%;
+}
+/* div.service-details {
+    padding-top: 30px;
+} */
+div.first-service div, div.inner-services div {
+    margin-top: 20px;
+}
+div.inner-services1 {
+    min-height: 50px;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 50px;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    transition: border-bottom 0.5s ease-in-out, border-top 0.5s ease-in-out;
+}
+div.inner-services1:hover {
+    border-bottom: 1px solid var(--dark-blue);
+    border-top: 1px solid var(--grey-blue);
+}
+div.inner-services{
+    min-height: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    cursor: pointer;
+    border-bottom: 1px solid #000000;
+    transition: border-bottom 0.5s ease-in-out;
+}
+
+div.inner-services:hover {
+    border-bottom: 1px solid var(--sky-blue);
+}
+div.service-num {
+    margin-right: 60px;
+}
+div.service-num span {
+    font-size: 18px;
+    color: var(--grey-blue);
+    font-family: sans-serif;
+    font-weight: 600;
+}
+div.first-service {
+    display: flex;
+}
+div span.service1 {
+    font-size: 16px;
+    color: var(--grey-blue);
+    font-family: sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+div span.service2 {
+    font-size: 24px;
+    color: var(--grey-blue);
+    font-family: sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px
+}
+div span.service3 {
+    font-size: 18px;
+    color: var(--grey-blue);
+    font-family: sans-serif;
+    font-weight: 400;
+}
+.job3 {
+    margin-left: -50px;
+}
+div.service-arrow  {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 70px;
+    border-radius: 5px;
+    background-color: var(--grey-blue);;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+div.inner-services:hover div.service-arrow {
+    background-color: var(--sky-blue);
+}
+div.inner-services:hover div.service-arrow span {
+    color: var(--grey-blue);
+}
+div.service-arrow span {
+    font-size: 20px;
+    /* transform: rotate(-45deg); */
+    color: #ffffff;
+}
+
+/* Footer */
+footer {
+    background-color: #1D1D1D;
+    min-height: 250px;
+    width: 100%;
+}
+div.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 40px;
+    padding-left:  20px;
+    padding-right: 20px;
+}
+div.footer div {
+    margin-top: 20px;
+}
+div.footer div p {
+    font-family: sans-serif;
+    font-size: 16px;
+    color: white;
+}
+div.footer div p  span {
+    color: var(--sky-blue);
+}
+div.footer div a {
+    font-family: sans-serif;
+    font-size: 18px;
+    text-decoration: none;
+    color: var(--sky-blue);
+    cursor: pointer;
+    margin-right: 20px;
+    transition: color font-size 0.5s ease-in;
+}
+div.footer div a:hover {
+    font-size: 20px;
+    color: var(--sea-blue);
+}
+div.footer  >:last-child  {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    margin-right: 20px;
+    border-radius: 5px;
+    background-color: var(--sky-blue);
+}
+div.footer  >:last-child i {
+    margin-left: 20px;
+    font-size: 18px;
+    transform: rotate(-90deg);
+    color: #1D1D1D;
+}
 /* Media Queries for Responsiveness */
 @media only screen and (min-width: 768px) {
     .toggle {
@@ -288,6 +461,7 @@ section.con2 {
     }
     .nav-list  {
         list-style: none;
+        margin-top: 20px;
     }
     
     .nav-list li {
@@ -356,12 +530,13 @@ section.con2 {
         display: flex;
         flex-direction: row;
         width: 100%;
-        min-height: 500px;
+        min-height: 600px;
         padding-top: 20px;
     }
     div.caption {
         width: 50%;
         padding: 50px 20px;
+        margin-top: 20px;
         /* border: 1px solid black; */
         min-height: 500px;
     }
@@ -377,7 +552,58 @@ section.con2 {
         height: 400px;
         max-width: 100%;
     }
+    .search-job button {
+        height: 40px;
+        width: 30%;
+    }
+    .search-job input {
+        width: 60%;
+        height: 40px;
+        border-radius: 50px;
+        /* border: 1px light var(--sky-blue); */
+    }
     /* div.heading-img  img {
         transform: scale(1.2);
     } */
+
+     /* Services Section */
+     div.inner-services{
+        min-height: 150px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+        position: relative;
+        cursor: pointer;
+        border-bottom: 1px solid #4d4c4c;
+        transition: border-bottom 0.5s ease-in-out;
+    }
+    div.first-service div, div.inner-services div {
+        margin-top: 0px;
+    }
+
+     /* Footer */
+    footer {
+        min-height: 100px;
+        width: 100%;
+    }
+    div.footer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        padding-top: 40px;
+        /* padding-left:  20px; */
+        /* padding-right: 20px; */
+    }
+    div.footer  >:last-child i {
+        margin-left: 20px;
+        font-size: 18px;
+        transform: rotate(-90deg);
+        color: #1D1D1D;
+    }
+    div.footer div {
+        margin-top: 0px;
+    }
 }

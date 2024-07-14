@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles/signup.jobseeker.css">
+    <title>Job Application Form | TrendyJobConnect</title>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="con-logo">
+            <a href="#l"><img src="../static/images/my-logo/my-logo3.png" alt="logo" class="my-logo" id="logo"></a>
+        </div>
+        <ul class="nav-list">
+            <li><a href="#">Find A Job</a></li>
+            <li><a href="#">Post A Job</a></li>
+        </ul>
+        <div class="reg">
+            <button class="btn1">Login</button>
+            <button class="btn2">Sign Up</button>
+        </div>
+        <div class="toggle">
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <a href="#" class="closing-bar"><i class="fa-solid fa-x"></i></a>
+        </div>
+    </nav>
+    <div class="mobile-nav">
+        <ul>
+            <li><a href="#">Find A Job</a></li>
+            <li><a href="/login">Post A Job</a></li>
+            <li><button class="btn1">Login</button></li>
+            <li><button class="btn2">Sign Up</button></li>
+        </ul>
+    </div>
+    <div class="form-container">
+        <h2>Job Application Form</h2>
+        <form id="job-application-form">
+            <!-- Group 1: Name -->
+            <fieldset>
+                <legend>Name</legend>
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" name="first-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="middle-name">Middle Name</label>
+                    <input type="text" id="middle-name" name="middle-name">
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="last-name" required>
+                </div>
+            </fieldset>
+
+            <!-- Group 2: Contacts -->
+            <fieldset>
+                <legend>Contacts</legend>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone-number">Phone Number</label>
+                    <input type="text" id="phone-number" name="phone-number">
+                </div>
+            </fieldset>
+
+            <!-- Group 3: Position Applied For -->
+            <fieldset>
+                <legend>Position Applied For</legend>
+                <div class="form-group">
+                    <label for="position">Position</label>
+                    <input type="text" id="position" name="position">
+                </div>
+            </fieldset>
+
+            <!-- Group 4: Cover Letter -->
+            <fieldset>
+                <legend>Cover Letter</legend>
+                <div class="form-group">
+                    <label for="cover-letter">Cover Letter</label>
+                    <textarea id="cover-letter" name="cover-letter" rows="4"></textarea>
+                </div>
+            </fieldset>
+
+            <!-- Group 5: Upload Resume -->
+            <fieldset>
+                <legend>Upload Resume</legend>
+                <div class="form-group">
+                    <label for="resume">Upload Resume</label>
+                    <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+                </div>
+            </fieldset>
+
+            <!-- Group 6: Additional Documents -->
+            <fieldset>
+                <legend>Additional Documents</legend>
+                <div class="form-group">
+                    <label for="additional-docs">Upload Additional Documents</label>
+                    <input type="file" id="additional-docs" name="additional-docs" accept=".pdf,.doc,.docx">
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <button type="submit" class="btn">Apply</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

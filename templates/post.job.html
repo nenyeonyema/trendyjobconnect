@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles/signup.jobseeker.css">
+    <title>Post Job Application Form | TrendyJobConnect</title>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="con-logo">
+            <a href="/"><img src="../static/images/my-logo/my-logo3.png" alt="logo" class="my-logo" id="logo"></a>
+            <!-- <h2><a class="font-effect-3d-float logo" style="color: black;" href="#">trendyJobconnect</a></h2> -->
+        </div>
+        <ul class="nav-list">
+            <li><a href="#">Find A Job</a></li>
+            <li><a href="#">Post A Job</a></li>
+        </ul>
+       
+        <div class="reg">
+            <button class="btn1">Login</button>
+            <button class="btn2">Sign Up</button>
+        </div>
+
+        <div class="toggle">
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <a href="#" class="closing-bar"><i class="fa-solid fa-x"></i></a>
+        </div>
+    </nav>
+    <div class="form-container">
+        <h2>Post Job Application Form</h2>
+        <form id="post-job-application-form">
+            <!-- Group 1: Job Details -->
+            <fieldset>
+                <legend>Job Details</legend>
+                <div class="form-group">
+                    <label for="job-title">Job Title</label>
+                    <input type="text" id="job-title" name="job-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="company-name">Company Name</label>
+                    <input type="text" id="company-name" name="company-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="job-description">Job Description</label>
+                    <textarea id="job-description" name="job-description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="responsibilities">Responsibilities</label>
+                    <textarea id="responsibilities" name="responsibilities" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="equirements">Requirements</label>
+                    <textarea id="requirements" name="requirements" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="job-location">Job Location</label>
+                    <input type="text" id="job-location" name="job-location" required>
+                </div>
+                <div class="form-group">
+                    <label for="job-type">Job Type</label>
+                    <select id="job-type" name="job-type" required>
+                        <option value="">Select Job Type</option>
+                        <option value="full-time">Full Time</option>
+                        <option value="part-time">Part Time</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="benefits">Benefits</label>
+                    <textarea id="benefits" name="benefits" rows="4"></textarea>
+                </div>
+            </fieldset>
+
+            <!-- Group 2: Contact Details -->
+            <fieldset>
+                <legend>Contact Details</legend>
+                <div class="form-group">
+                    <label for="contact-first-name">First Name</label>
+                    <input type="text" id="contact-first-name" name="contact-first-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-last-name">Last Name</label>
+                    <input type="text" id="contact-last-name" name="contact-last-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">Email</label>
+                    <input type="email" id="contact-email" name="contact-email" required>
+                </div>
+            </fieldset>
+
+            <!-- Group 3: Upload Corporate Logo -->
+            <fieldset>
+                <legend>Upload Corporate Logo</legend>
+                <div class="form-group">
+                    <label for="corporate-logo">Upload Logo</label>
+                    <input type="file" id="corporate-logo" name="corporate-logo" accept="image/*">
+                </div>
+            </fieldset>
+
+            <div class="form-group">
+                <button type="submit" class="btn">Post Job</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

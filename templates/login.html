@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles/signup.jobseeker.css">
     <link rel="stylesheet" href="../static/styles/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia|Poppins&effect=neon|outline|emboss|shadow-multiple|3d-float">
@@ -10,6 +11,36 @@
     <title>Login - trendyJobconnect</title>
 </head>
 <body>
+    <nav class="nav-bar">
+        <div class="con-logo">
+            <a href="#l"><img src="../static/images/my-logo/my-logo3.png" alt="logo" class="my-logo" id="logo"></a>
+        </div>
+        <ul class="nav-list">
+            <li><a href="#">Find A Job</a></li>
+            <li><a href="#">Post A Job</a></li>
+        </ul>
+        <div class="reg">
+            <button class="btn1">Login</button>
+            <button class="btn2">Sign Up</button>
+        </div>
+        <div class="toggle">
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <a href="#" class="closing-bar"><i class="fa-solid fa-x"></i></a>
+        </div>
+    </nav>
+    <div class="mobile-nav">
+        <ul>
+            <li><a href="#">Find A Job</a></li>
+            <li><a href="/login">Post A Job</a></li>
+            <li><button class="btn1">Login</button></li>
+            <li><button class="btn2">Sign Up</button></li>
+        </ul>
+    </div>
+
     <div class="container">
         <h2>Login</h2>
         <form action="/login" method="post">
@@ -18,10 +49,11 @@
             <label for="password">Password:</label><br>
             <input type="password" id="password" placeholder="enter your password" name="password" required><br><br>
             <div class="form-group">
-                <button type="submit" class="btn">Sign Up</button>
+                <button type="submit" class="btn">Login</button>
             </div>
+            <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
         </form>
-        <p>Already have an account? <a href="signup.html">Sign Up here</a></p>
+        
     </div>
 </body>
 </html>

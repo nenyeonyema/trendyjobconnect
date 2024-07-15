@@ -43,6 +43,16 @@ body {
     background-color: black;
     margin: 4px 0;
 }
+.job {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.search-item {
+    text-decoration: none;
+    color: white;
+}
 /* Footer */
 footer {
     background-color: #1D1D1D;
@@ -98,6 +108,29 @@ div.footer  >:last-child i {
     transform: rotate(-90deg);
     color: #1D1D1D;
 }
+
+.theapply {
+    width: 70px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--grey-blue);
+    border-radius: 5px;
+    opacity: 1;
+    cursor: pointer;
+    transition: opacity 0.5s ease-in;
+}
+
+.theapply:hover {
+    opacity: 0.7;
+}
+.theapply span a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
+
 @media only screen and (min-width: 768px) {
     .toggle-button {
         display: none;
@@ -127,6 +160,31 @@ div.footer  >:last-child i {
         height: 30px;
         border-radius: 15px;
         color: white;
+    }
+    .job {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .theapply {
+        width: 80px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--grey-blue);
+        border-radius: 5px;
+        opacity: 1;
+        transition: background-color 0.5s ease-in;
+    }
+    
+    .theapply:hover {
+        opacity: 0.7;
+    }
+    .theapply span a {
+        color: white;
+        text-decoration: none;
     }
 }
 

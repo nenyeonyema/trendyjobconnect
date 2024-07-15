@@ -1,0 +1,74 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    --white-blue: #9ce7f5;
+    --light-blue: #c8edf7;
+    --lighter-blue: #F3F9FF;
+    --sea-blue: rgb(65, 190, 255);
+    --sky-blue: rgb(6, 160, 241);
+    --grey-blue: rgb(16, 42, 67);
+    --grey-light-blue: rgb(72, 101, 129);
+    --grey-light:  rgb(36, 68, 100);
+    --just-light-blue: rgb(232, 232, 233);
+    --light-grey-blue: rgb(218, 230, 236);
+    --dark-light-blue: #001449;
+    --dark-blue: #001848;
+    --deep-purple: #5f0d3b;
+}
+
+.ask {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.ask div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 270px;
+    height: 150px;
+    border: 1px solid var(--sea-blue);
+    margin-top: 50px;
+    transition: background-color 0.5s ease-in;
+}
+
+.ask div h1 a {
+    text-decoration: none;
+    font-size: 20px;
+    text-align: center;
+    color: var(--grey-blue);
+    transition: color 0.5s ease-in;
+}
+.ask div:hover {
+    background-color: var(--grey-blue);
+}
+.ask div:hover h1 a {
+    color: white;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .ask {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .ask div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 350px;
+        height: 200px;
+        border: 1px solid var(--sea-blue);
+    }
+    .ask div h1 a {
+        text-decoration: none;
+        font-size: 30px;
+        text-align: center;
+    }
+}

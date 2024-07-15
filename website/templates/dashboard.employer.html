@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Poppins&effect=neon|outline|emboss|shadow-multiple|3d-float' rel='stylesheet'>
-    <link rel="stylesheet" href="../static/styles/dashbaord.jobseeker.css">
+    <link rel="stylesheet" href="../static/styles/dashbaord.employer.css">
     <link rel="stylesheet" href="../static/styles/signup.jobseeker.css">
-    <title>Job Seeker Dashboard | TrendyJobConnect</title>
+    <title>Employer Dashboard | TrendyJobConnect</title>
 </head>
 <body>
+    
     <nav class="nav-bar">
         <div class="con-logo">
-            <a href="#l"><img src="../static/images/my-logo/my-logo3.png" alt="logo" class="my-logo" id="logo"></a>
+            <a href="#home"><img src="../static/images/my-logo/my-logo3.png" alt="logo" class="my-logo" id="logo"></a>
         </div>
+       
         <div class="reg">
-            
             <button class="btn2">Logout</button>
         </div>
         <div class="toggle">
@@ -29,46 +30,51 @@
     </nav>
     <div class="mobile-nav">
         <ul>
-            <!-- <li><a href="#">Find A Job</a></li>
-            <li><a href="/login">Post A Job</a></li>
-            <li><button class="btn1">Login</button></li> -->
+            
             <li><button class="btn2">Logout</button></li>
         </ul>
     </div>
-    <div class="dashboard-container">
+
+    <div class="dashboard-container" id="home">
         <aside class="sidebar">
             <div class="profile">
-                <img src="profile-pic.jpg" alt="Profile Picture">
-                <h3>John Doe</h3>
-                <p>Software Engineer</p>
+                <img src="../static/images/jobconnect.png" alt="Profile Picture">
+                <h3>Jane Doe</h3>
+                <p>HR Manager, Company XYZ</p>
             </div>
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">My Applications</a></li>
-                    <li><a href="#">Saved Jobs</a></li>
-                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">My Posted Jobs</a></li>
+                    <li><a href="#">Company Profile</a></li>
                     <li><a href="#">Settings</a></li>
                 </ul>
             </nav>
         </aside>
 
         <main class="main-content">
-            <section class="search-jobs">
-                <input type="text" placeholder="Search for jobs...">
-                <button class="search-btn">Search</button>
+            <section class="actions">
+                <button class="action-btn post-job">Post a Job</button>
             </section>
             <section class="job-listings">
-                <h2>Job Listings</h2>
+                <h2>Posted Jobs</h2>
                 <div class="job">
                     <h3>Front-end Developer</h3>
-                    <p>Company XYZ</p>
                     <p>Location: New York, NY</p>
+                    <p>Posted on: 2024-07-08</p>
+                    <div class="job-actions">
+                        <button class="action-btn update-job">Update</button>
+                        <button class="action-btn delete-job">Delete</button>
+                    </div>
                 </div>
                 <div class="job">
                     <h3>Back-end Developer</h3>
-                    <p>Company ABC</p>
                     <p>Location: San Francisco, CA</p>
+                    <p>Posted on: 2024-07-07</p>
+                    <div class="job-actions">
+                        <button class="action-btn update-job">Update</button>
+                        <button class="action-btn delete-job">Delete</button>
+                    </div>
                 </div>
                 <!-- More job listings can be added here -->
             </section>

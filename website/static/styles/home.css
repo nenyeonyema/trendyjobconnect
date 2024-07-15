@@ -251,6 +251,9 @@ div.search-job {
     color: var(--grey-blue); */
     border: none;
 }
+.search-job2 button a, .clear-deco {
+    text-decoration: none;
+}
 
 div.heading-img {
     margin-top: 30px;
@@ -562,6 +565,16 @@ div.footer  >:last-child i {
         border-radius: 50px;
         /* border: 1px light var(--sky-blue); */
     }
+    .search-job2 input {
+        margin-left: 180px;
+    }
+    .search-job2 button {
+        width: 100px;
+    }
+    .search-job2 button a {
+        text-decoration: none;
+    }
+    
     /* div.heading-img  img {
         transform: scale(1.2);
     } */

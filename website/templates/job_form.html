@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Poppins|Kanit|Caveat&effect=neon|outline|emboss|shadow-multiple|3d-float' rel='stylesheet'>
     <link rel="stylesheet" href="../static/styles/signup.jobseeker.css">
     <title>Job Application Form | TrendyJobConnect</title>
 </head>
 <body>
     <nav class="nav-bar">
         <div class="con-logo" id="home">
-            <a href="#l"><img src="../static/images/my-logo/my-logo3.png" alt="logo" class="my-logo" id="logo"></a>
+            <a href="/"><img src="../static/images/my-logo/my-logo3.png" alt="logo" class="my-logo" id="logo"></a>
         </div>
         <ul class="nav-list">
-            <li><a href="#">Find A Job</a></li>
-            <li><a href="#">Post A Job</a></li>
+            <li><a href="#">All Jobs</a></li>
+            <!-- <li><a href="#">Post A Job</a></li> -->
         </ul>
         <div class="reg">
-            <button class="btn1">Login</button>
-            <button class="btn2">Sign Up</button>
+            <!-- <button class="btn1">Login</button> -->
+            <button class="btn2"><a href="/logout" class="clear-deco" style="font-family: Poppins;">Logout</a></button>
         </div>
         <div class="toggle">
             <a href="#" class="toggle-button">
@@ -31,13 +32,24 @@
     </nav>
     <div class="mobile-nav">
         <ul>
-            <li><a href="#">Find A Job</a></li>
-            <li><a href="/login">Post A Job</a></li>
-            <li><button class="btn1">Login</button></li>
-            <li><button class="btn2">Sign Up</button></li>
+            <li><a href="/jobs">All Jobs</a></li>
+            <!-- <li><a href="/login">Post A Job</a></li> -->
+            <!-- <li><button class="btn1">Login</button></li> -->
+            <li><button class="btn2"><a href="/logout" class="clear-deco" style="font-family: Poppins;">Logout</a></button></li>
         </ul>
     </div>
     <div class="form-container">
+        <div>
+            <h2 style="text-align: left;">Job title</h2>
+            <h4>Job location</h4>
+            <h4 style="text-align: left;">Responsibilities</h4>
+            <p style="text-align: left;">Responsibilities items</p>
+            <h4 style="text-align: left;">Requirements</h4>
+            <p style="text-align: left;">Requirements items</p>
+            <h4 style="text-align: left;">Salary</h4>
+            <p style="text-align: left;">Salary value</p>
+        </div>
+        <br>
         <h2>Job Application Form</h2>
         <form id="job-application-form">
             <!-- Group 1: Name -->
@@ -126,5 +138,7 @@
             </div> 
         </div>
     </footer>
+
+    <script type="text/javascript" src="../static/scripts/home.js"></script>
 </body>
 </html>

@@ -1,11 +1,24 @@
-# forms.py
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, PasswordField
-from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms import StringField, PasswordField, SelectField, FileField, SubmitField, TextAreaField
+from wtforms.validators import DataRequired, Email, EqualTo, Length
 
-class JobSeekerSignUpForm(FlaskForm):
+class JobSeekerSignupForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
-    email = EmailField('Email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    nationality = StringField('Nationality', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    current_job_position = StringField('Current Job Position', validators=[DataRequired()])
+    gender = SelectField('Gender', choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')], validators=[DataRequired()])
+    profile_pic = FileField('Profile Picture')
+    skills = TextAreaField('Skills', validators=[DataRequired()])
+    experience = TextAreaField('Experience', validators=[DataRequired()])
+    resume = FileField('Resume', validators=[DataRequired()])
+    submit = SubmitField('Sign Up')
+
+
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
+    submit = SubmitField('Login')

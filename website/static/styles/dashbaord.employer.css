@@ -43,6 +43,10 @@ body {
     background-color: black;
     margin: 4px 0;
 }
+.clear-deco {
+    text-decoration: none;
+    color: white;
+}
 /* Footer */
 footer {
     background-color: #1D1D1D;

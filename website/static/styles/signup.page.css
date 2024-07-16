@@ -24,13 +24,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 140px;
 }
 .ask div {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 270px;
-    height: 150px;
+    height: 250px;
     border: 1px solid var(--sea-blue);
     margin-top: 50px;
     transition: background-color 0.5s ease-in;
@@ -38,7 +39,7 @@
 
 .ask div h1 a {
     text-decoration: none;
-    font-size: 20px;
+    font-size: 22px;
     text-align: center;
     color: var(--grey-blue);
     transition: color 0.5s ease-in;
@@ -47,6 +48,11 @@
     background-color: var(--grey-blue);
 }
 .ask div:hover h1 a {
+    color: white;
+}
+
+.clear-deco {
+    text-decoration: none;
     color: white;
 }
 
@@ -62,13 +68,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 350px;
-        height: 200px;
+        width: 400px;
+        height: 300px;
         border: 1px solid var(--sea-blue);
     }
     .ask div h1 a {
         text-decoration: none;
-        font-size: 30px;
+        font-size: 35px;
         text-align: center;
+    }
+    .cleanup {
+        text-decoration: none;
+        color: black;
     }
 }

@@ -259,6 +259,10 @@ div.footer  >:last-child i {
     transform: rotate(-90deg);
     color: #1D1D1D;
 }
+.clear-deco {
+    text-decoration: none;
+    color: white;
+}
 @media only screen and (min-width: 768px) {
     .toggle {
         display: none;
@@ -362,5 +366,9 @@ div.footer  >:last-child i {
     }
     div.footer div {
         margin-top: 0px;
+    }
+    .cleanup {
+        text-decoration: none;
+        color: black;
     }
 }

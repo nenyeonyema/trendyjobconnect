@@ -17,7 +17,7 @@
         </div>
        
         <div class="reg">
-            <button class="btn2">Logout</button>
+            <button class="btn2"><a href="/logout" class="clear-deco">Logout</a></button>
         </div>
         <div class="toggle">
             <a href="#" class="toggle-button">
@@ -35,7 +35,7 @@
         </ul>
     </div>
 
-    <div class="dashboard-container" id="home">
+    <div class="dashboard-container">
         <aside class="sidebar">
             <div class="profile">
                 <img src="../static/images/jobconnect.png" alt="Profile Picture">
@@ -54,7 +54,7 @@
 
         <main class="main-content">
             <section class="actions">
-                <button class="action-btn post-job">Post a Job</button>
+                <button class="action-btn post-job"><a href="/postjob" class="clear-deco">Post a Job</a></button>
             </section>
             <section class="job-listings">
                 <h2>Posted Jobs</h2>
@@ -98,6 +98,7 @@
     </footer>
 
     <script src="../static/scripts/home.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='../static/scripts/home.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>

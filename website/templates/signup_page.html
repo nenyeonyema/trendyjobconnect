@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles/signup.jobseeker.css">
+    <link rel="stylesheet" href="../static/styles/signup.page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Poppins&effect=neon|outline|emboss|shadow-multiple|3d-float' rel='stylesheet'>
+    <title>Job Seeker Sign Up | TrendyJobConnect</title>
+</head>
+<body>
+    <body>
+        <nav class="nav-bar">
+            <div class="con-logo" id="home">
+                <a href="/"><img src="../static/images/my-logo/my-logo3.png" alt="logo" class="my-logo" id="logo"></a>
+            </div>
+            <ul class="nav-list">
+                <li><a href="#jobs">Find A Job</a></li>
+                <li><a href="/login">Post A Job</a></li>
+            </ul>
+            <div class="reg">
+                <button class="btn1"><a href="/login" class="cleanup">Login</a></button>
+                <button class="btn2"><a href="/signup"  class="clear-deco">Sign Up</a></button>
+            </div>
+            <div class="toggle">
+                <a href="#" class="toggle-button">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </a>
+                <a href="#" class="closing-bar"><i class="fa-solid fa-x"></i></a>
+            </div>
+        </nav>
+        <div class="mobile-nav">
+            <ul>
+                <li><a href="#">Find A Job</a></li>
+                <li><a href="/login">Post A Job</a></li>
+                <li><button class="btn1"><a href="/login" class="clear-deco1">Login</a></button></li>
+                <li><button class="btn2"><a href="/signup" class="clear-deco">Sign Up</a></button></li>
+            </ul>
+        </div>
+        <div class="ask">
+            <div><h1><a href="/signup/jobseeker" class="clear-deco">Are you a Job Seeker</a></h1></div>
+            <div><h1><a href="/signup/employer" class="clear-deco">Are you an employer</a></h1></div>
+        </div>
+        
+         <!-- Footer -->
+         <footer>
+            <div class="footer">
+                <div>
+                    <p>Copyright © 2024 <span>trendyJobconnect.</span> All rights reserved.</p>
+                </div>
+                <div>
+                    <a href="https://www.linkedin.com/in/chinenyeonyema/">Contact Us</a>
+                    <!-- <span>Privacy Policy</span> -->
+                </div>
+                <div class="service-arrow">
+                    <a href="#home"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                </div> 
+            </div>
+        </footer>
+        <script src="../static/scripts/home.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='../static/scripts/home.js') }}"></script>
+    </body>
+</html>

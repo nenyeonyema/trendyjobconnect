@@ -53,6 +53,10 @@ body {
     text-decoration: none;
     color: white;
 }
+.clear-deco {
+    text-decoration: none;
+    color: white;
+}
 /* Footer */
 footer {
     background-color: #1D1D1D;

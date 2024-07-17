@@ -12,7 +12,7 @@
 </head>
 <body>
     <nav class="nav-bar">
-        <div class="con-logo" id="home">
+        <div class="con-logo">
             <a href="/"><img src="../static/images/my-logo/my-logo3.png" alt="logo" class="my-logo" id="logo"></a>
             <!-- <h2><a class="font-effect-3d-float logo" style="color: black;" href="#">trendyJobconnect</a></h2> -->
         </div>
@@ -51,8 +51,10 @@
                     <p class="p2">Discover endless career opportunities tailored just for you. Our platform connects you with top employers looking for talented individuals like you. Whether you're just starting your career or seeking a new challenge, take the first step towards your dream job today. Sign up now and unlock a world of possibilities!</p>
                 </div>
                 <div class="search-job">
-                    <input type="text" placeholder="  Search Job or Company">
-                    <button>Explore</button>
+                    <form action="/job/alljobs">
+                        <input type="text" placeholder="  Search Job or Company">
+                        <button type="submit">Explore</button>
+                    </form>
                 </div>
             </div>
             <div class="heading-img" data-aos="fade-up-left">
@@ -89,9 +91,12 @@
         </div>
         <div>
             <div class="search-job search-job2" data-aos="fade-up">
-            <input type="text" placeholder="   Find more Jobs" >
-            <button><a href="/jobs" class="clear-deco">Search</a></button>
-        </div>
+                <form action="/job/alljobs">
+                    <input type="text" placeholder="   Find more Jobs" >
+                    <button type="submit"><a class="clear-deco">Search</a></button>
+
+                </form>
+            </div>
         </div>
         
         <div class="service-details" data-aos="fade-up">

@@ -1,63 +1,86 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from validations.employer_validation import JobPostForm
-from validations.jobseeker_validation import AppliedJobForm
-from services.employer import create_job
-from services.jobseeker import create_appliedjob
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
+from ..models.user import Job, AppliedJob
+from ..services.job_service import create_job, apply_for_job
+from ..validation.forms import AppliedJobForm, JobPostForm
+from ..services.job_service import get_all_jobs
 
 job = Blueprint('job', __name__)
 
-
-@job.route('/post-job', methods=['GET', 'POST'])
+@job.route('/post_job', methods=['GET', 'POST'])
 @login_required
 def post_job():
+    if not current_user.is_employer:
+        flash('Only employers can post jobs.', 'danger')
+        return redirect(url_for('auth.login'))
     form = JobPostForm()
-    if form.validate_on_submit():
-        job_data = {
-            'job_title': form.job_title.data,
-            'company_name': form.company_name.data,
-            'job_description': form.job_description.data,
-            'responsibilities': form.responsibilities.data,
-            'requirements': form.requirements.data,
-            'job_location': form.job_location.data,
-            'job_type': form.job_type.data,
-            'expires_on': form.expires_on.data,
-            'benefits': form.benefits.data,
-            'contact_first_name': form.contact_first_name.data,
-            'contact_last_name': form.contact_last_name.data,
-            'contact_email': form.contact_email.data,
-            'job_position': form.job_position.data,
-            'corporate_logo': form.corporate_logo.data
-        }
-        try:
-            job = create_job(current_user.id, job_data)
-            flash('Job posted successfully!', 'success')
-            return redirect(url_for('dashboard.employer', job_id=job.id))
-        except Exception as e:
-            flash(f'Error creating account: {e}', 'danger')
-    return render_template('post_job.html', form=form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            job_data = {
+                'company_name': request.form['company-name'],
+                'title': request.form['job-title'],
+                'description': request.form['job-description'],
+                'responsibilities': request.form['responsibilities'],
+                'requirements': request.form['requirements'],
+                'location': request.form['job-location'],
+                'expires_on': request.form['expires-on'],
+                'type': request.form['job-type'],
+                'benefits': request.form['benefits'],
+                'user_id': current_user.id
+            }
 
+        job = create_job(current_user.id, job_data)
+        flash('Job posted successfully!', 'success')
+        return redirect(url_for('job.dashboard_employer'))
+    return render_template('post_job.html')
 
-@job.route('/apply/<int:job_id>', methods=['GET', 'POST'], strict_slashes=False)
+@job.route('/jobs', methods=['GET'])
+@login_required
+def list_jobs():
+    jobs = get_all_jobs()
+    return render_template('list_jobs.html', jobs=jobs)
+
+@job.route('/job/<int:job_id>', methods=['GET'])
+@login_required
+def job_details(job_id):
+    job = Job.query.get_or_404(job_id)
+    return render_template('job_details.html', job=job)
+
+@job.route('/apply/<int:job_id>', methods=['GET', 'POST'])
 @login_required
 def apply_job(job_id):
     form = AppliedJobForm()
     if form.validate_on_submit():
-        job_data = {
+        application_data = {
+            'first_name': request.form['first-name'],
+            'middle_name': request.form['middle-name'],
+            'last_name': request.form['last-name'],
+            'email': request.form['email'],
+            'phone_number': request.form['phone-number'],
+            'job_title': request.form['job-title'],
+            'cover_letter': request.form['cover-letter'],
             'job_id': job_id,
-            'jobseeker_id': current_user.id,
-            'first_name': form.first_name.data,
-            'middle_name': form.middle_name.data,
-            'last_name': form.last_name.data,
-            'phone_number': form.phone_number.data,
-            'position': form.position.data,
-            'email': form.email.data,
-            'cover_letter': form.cover_letter.data
+            'user_id': current_user.id
         }
-        try:
-            create_appliedjob(job_data)
-            flash('Your application has been submitted.', 'success')
-            return redirect(url_for('dashboard.jobseeker'))
-        except Exception as e:
-            flash(f'Error creating account: {e}', 'danger')
-    return render_template('job_form.html', form=form)
+        apply_for_job(application_data)
+        flash('Application submitted successfully!', 'success')
+        return redirect(url_for('job.list_jobs'))
+    return render_template('apply_job.html', form=form, job_id=job_id)
+
+@job.route('/dashboard/employer', methods=['GET'])
+@login_required
+def dashboard_employer():
+    if not current_user.is_employer:
+        flash('Access denied.', 'danger')
+        return redirect(url_for('auth.login'))
+    jobs = Job.query.filter_by(user_id=current_user.id).all()
+    return render_template('dashboard_employer.html', jobs=jobs, companyname=current_user.company_name, companylocation=current_user.company_location, companylogo=current_user.company_logo, email=current_user.email)
+
+@job.route('/dashboard/jobseeker', methods=['GET'])
+@login_required
+def dashboard_jobseeker():
+    if current_user.is_employer:
+        flash('Access denied.', 'danger')
+        return redirect(url_for('auth.login'))
+    applied_jobs = AppliedJob.query.filter_by(user_id=current_user.id).all()
+    return render_template('dashboard_jobseeker.html', applied_jobs=applied_jobs, firstname=current_user.first_name, lastname=current_user.first_name, profilepic=current_user.profile_pic, current_position=current_user.current_position, email=current_user.email)

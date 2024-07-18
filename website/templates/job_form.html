@@ -16,7 +16,7 @@
             <a href="/"><img src="../static/images/my-logo/my-logo3.png" alt="logo" class="my-logo" id="logo"></a>
         </div>
         <ul class="nav-list">
-            <li><a href="#">All Jobs</a></li>
+            <li><a href="{{ url_for('job.alljobs') }}">All Jobs</a></li>
             <!-- <li><a href="#">Post A Job</a></li> -->
         </ul>
         <div class="reg">
@@ -40,82 +40,70 @@
             <li><button class="btn2"><a href="/logout" class="clear-deco" style="font-family: Poppins;">Logout</a></button></li>
         </ul>
     </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
     <div class="form-container">
-        <div>
-            <h2 style="text-align: left;">Job title</h2>
-            <h4>Job location</h4>
-            <h4 style="text-align: left;">Responsibilities</h4>
-            <p style="text-align: left;">Responsibilities items</p>
-            <h4 style="text-align: left;">Requirements</h4>
-            <p style="text-align: left;">Requirements items</p>
-            <h4 style="text-align: left;">Salary</h4>
-            <p style="text-align: left;">Salary value</p>
-        </div>
-        <br>
-        <h2>Job Application Form</h2>
-        <form id="job-application-form" action="/apply" method="post">
-            <!-- Group 1: Name -->
-            <fieldset>
-                <legend>Name</legend>
-                <div class="form-group">
-                    <label for="first-name">First Name</label>
-                    <input type="text" id="first-name" name="first-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="middle-name">Middle Name</label>
-                    <input type="text" id="middle-name" name="middle-name">
-                </div>
-                <div class="form-group">
-                    <label for="last-name">Last Name</label>
-                    <input type="text" id="last-name" name="last-name" required>
-                </div>
-            </fieldset>
+    {% block content %}
+    <div class="container">
+        <h1>{{ job.title }}</h1>
+        <p><strong>Company Name:</strong> {{ job.company_name }}</p>
+        <p><strong>Description:</strong> {{ job.description }}</p>
+        <p><strong>Responsibilities:</strong> {{ job.responsibilities }}</p>
+        <p><strong>Requirements:</strong> {{ job.requirements }}</p>
+        <p><strong>Location:</strong> {{ job.location }}</p>
+        <p><strong>Type:</strong> {{ job.type }}</p>
+        <p><strong>Expires On:</strong> {{ job.expires_on }}</p>
+        <p><strong>Contact:</strong> {{ job.contact_first_name }} {{ job.contact_last_name }} ({{ job.contact_email }})</p>
+        <p><strong>Position:</strong> {{ job.contact_position }}</p>
 
-            <!-- Group 2: Contacts -->
-            <fieldset>
-                <legend>Contacts</legend>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone-number">Phone Number</label>
-                    <input type="text" id="phone-number" name="phone-number">
-                </div>
-            </fieldset>
-
-            <!-- Group 3: Position Applied For -->
-            <fieldset>
-                <legend>Position Applied For</legend>
-                <div class="form-group">
-                    <label for="position">Position</label>
-                    <input type="text" id="position" name="position">
-                </div>
-            </fieldset>
-
-            <!-- Group 4: Cover Letter -->
-            <fieldset>
-                <legend>Cover Letter</legend>
-                <div class="form-group">
-                    <label for="cover-letter">Cover Letter</label>
-                    <textarea id="cover-letter" name="cover-letter" rows="4"></textarea>
-                </div>
-            </fieldset>
-
-            <!-- Group 5: Upload Resume -->
-            <fieldset>
-                <legend>Upload Resume</legend>
-                <div class="form-group">
-                    <label for="resume">Upload Resume</label>
-                    <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
-                </div>
-            </fieldset>
-
+        <h2>Apply for this Job</h2>
+        <form action="{{ url_for('job.apply_job', job_id=job.id) }}" method="post">
+            {{ form.hidden_tag() }} <!-- Include CSRF token for security -->
             <div class="form-group">
-                <button type="submit" class="btn">Apply</button>
+                {{ form.first_name.label }}<br>
+                {{ form.first_name(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.middle_name.label }}<br>
+                {{ form.middle_name(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.last_name.label }}<br>
+                {{ form.last_name(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.email.label }}<br>
+                {{ form.email(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.phone_number.label }}<br>
+                {{ form.phone_number(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.position.label }}<br>
+                {{ form.position(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.cover_letter.label }}<br>
+                {{ form.cover_letter(class="form-control") }}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit Application</button>
             </div>
         </form>
     </div>
+    {% endblock %}
+
+    </div>
+
+    
      <!-- Footer -->
      <footer>
         <div class="footer">

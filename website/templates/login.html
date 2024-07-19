@@ -62,13 +62,23 @@
                 <li><button class="btn2">Sign Up</button></li>
             </ul>
         </div>
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %} {%
+            if messages %}
+            <div class="flashes">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %} {% endwith %} {% block content %}{% endblock %}
+        </div>
 
         <div class="container">
             <h2>Login</h2>
-            <form action="/login" method="post">
+            <form method="POST" action="{{ url_for('auth.login') }}">
                 <label for="email">Email:</label><br />
                 <input
-                    type="text"
+                    type="email"
                     id="email"
                     name="email"
                     placeholder="enter your email"

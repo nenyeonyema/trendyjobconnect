@@ -23,17 +23,23 @@ body {
     position: relative;
     width: 400px;
     height: 450px;
-    background-color: white; /* Background color for the div */
+    background-color: white;
+    /* Background color for the div */
     border-radius: 20px;
     overflow: hidden;
-    border: 5px solid transparent; /* Transparent border to hold the rotating gradient */
-    border-image: linear-gradient(#00ccff, #d500f9) 1; /* Rotating gradient as border image */
-    border-image-slice: 1; /* Slice the border image */
+    border: 5px solid transparent;
+    /* Transparent border to hold the rotating gradient */
+    border-image: linear-gradient(#00ccff, #d500f9) 1;
+    /* Rotating gradient as border image */
+    border-image-slice: 1;
+    /* Slice the border image */
 }
+
 h2 {
     color: black;
     text-align: center;
 }
+
 /* h1, form, p {
     position: relative;
     z-index: 2;
@@ -50,6 +56,11 @@ form {
     z-index: 2;
 }
 
+input[type="password"] {
+    color: #000;
+    background-color: #fff;
+}
+
 input {
     width: 300px;
     height: 40px;
@@ -57,10 +68,11 @@ input {
 
 button {
     border: none;
-    background-color:rgb(16, 42, 67);
+    background-color: rgb(16, 42, 67);
     width: 300px;
     height: 40px;
 }
+
 a {
     color: white;
     font-family: 'Poppins';
@@ -71,21 +83,26 @@ a {
 p {
     z-index: 2;
 }
+
 p a {
     font-size: 15px;
 }
-form p{
+
+form p {
     color: black;
 }
-form p a{
+
+form p a {
     color: var(--sky-blue);
     font-size: 18px;
     text-decoration: none;
 }
+
 @keyframes rotateBorder {
     from {
         border-image: linear-gradient(#00ccff, #d500f9) 1;
     }
+
     to {
         border-image: linear-gradient(#00ccff, #d500f9) 1 rotate(360deg);
     }

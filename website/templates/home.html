@@ -92,7 +92,10 @@
                         </p>
                     </div>
                     <div class="search-job">
-                        <form action="/job/alljobs">
+                        <form
+                            method="POST"
+                            action="{{ url_for('job.search_jobs') }}"
+                        >
                             <input
                                 type="text"
                                 placeholder="  Search Job or Company"
@@ -159,9 +162,23 @@
             <div class="service-details" data-aos="fade-up">
                 <!-- <div class="inner-services1" >
             </div> -->
+
                 <div class="inner-services inner-services1" data-aos="fade-up">
                     <div class="first-service">
                         <div>
+                            {% if jobs %}
+                            <!-- <h2>Results</h2> -->
+                            <ul>
+                                {% for job in jobs %}
+                                <li>
+                                    {{ job.title }} - {{ job.company }} ({{
+                                    job.industry }})
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% elif form.is_submitted() %}
+                            <p>No jobs found in this industry.</p>
+                            {% endif %}
                             <span class="service2">Cloud Security Engineer</span
                             ><br />
                             <span class="service1">Moniepoint</span>

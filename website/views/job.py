@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from ..models.user import Job, AppliedJob
 from ..services.job_service import create_job, apply_for_job
-from ..validation.forms import AppliedJobForm, JobPostForm
+from ..validation.forms import AppliedJobForm, JobPostForm, JobSearchForm
 from ..services.job_service import get_all_jobs
 
 job = Blueprint('job', __name__)
@@ -84,3 +84,13 @@ def dashboard_jobseeker():
         return redirect(url_for('auth.login'))
     applied_jobs = AppliedJob.query.filter_by(user_id=current_user.id).all()
     return render_template('dashboard_jobseeker.html', applied_jobs=applied_jobs, firstname=current_user.first_name, lastname=current_user.first_name, profilepic=current_user.profile_pic, current_position=current_user.current_position, email=current_user.email)
+
+
+@job.route('/search', methods=['GET', 'POST'])
+def search_jobs():
+    form = JobSearchForm()
+    jobs = []
+    if form.validate_on_submit():
+        industry = request.form['industry']
+        jobs = Job.query.filter_by(industry=industry).all()
+    return render_template('search_jobs.html', form=form, jobs=jobs)

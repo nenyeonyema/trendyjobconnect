@@ -19,6 +19,7 @@ class Job(db.Model):
     requirements = db.Column(db.Text, nullable=False)
     location = db.Column(db.String(100), nullable=False)
     type = db.Column(db.String(50), nullable=False)
+    industry = db.Column(db.String(50), nullable=False)
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     applied_jobs = db.relationship('AppliedJob', backref='job', lazy=True)

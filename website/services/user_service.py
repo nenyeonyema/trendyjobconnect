@@ -1,5 +1,5 @@
 from werkzeug.security import generate_password_hash
-from models.user import db, User
+from ..models.user import db, User
 
 def create_employer(data):
     password_hash = generate_password_hash(data['password'])

@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required
 from ..models.user import User
-from services.user_service import create_employer, create_jobseeker
-from validation.forms import EmployerSignupForm, JobSeekerSignupForm, LoginForm
+from ..services.user_service import create_employer, create_jobseeker
+from ..validation.forms import EmployerSignupForm, JobSeekerSignupForm, LoginForm
 from werkzeug.security import check_password_hash
-
+# from ..services.user_service import get_employer, get_jobseeker
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])

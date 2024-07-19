@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField
-from wtforms import StringField, EmailField, IntegerField, TextAreaField, FileField, SelectField 
+from wtforms import EmailField, IntegerField, TextAreaField, FileField, SelectField, URLField 
 from wtforms.validators import DataRequired, Email, EqualTo 
 
 class EmployerSignupForm(FlaskForm):
@@ -9,7 +9,7 @@ class EmployerSignupForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     company_name = StringField('Company Name', validators=[DataRequired()])
     company_logo = FileField('Company Logo')
-    company_website = StringField('LinkedIn Page', validators=[DataRequired(), URL()])
+    company_website = URLField('Company Website', validators=[DataRequired()])
     submit = SubmitField('Sign Up')
 
 class JobSeekerSignupForm(FlaskForm):

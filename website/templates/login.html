@@ -15,6 +15,10 @@
         />
         <link
             rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        />
+        <link
+            rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Sofia|Poppins&effect=neon|outline|emboss|shadow-multiple|3d-float"
         />
         <link
@@ -36,12 +40,31 @@
                 /></a>
             </div>
             <ul class="nav-list">
-                <li><a href="#">Find A Job</a></li>
+                <li>
+                    <a href="{{ url_for('job.search_jobs')}}">Find A Job</a>
+                </li>
                 <li><a href="#">Post A Job</a></li>
             </ul>
             <div class="reg">
-                <button class="btn1">Login</button>
-                <button class="btn2">Sign Up</button>
+                <button class="btn1">
+                    <a
+                        href="{{ url_for('auth.login')}}"
+                        class="cleanup"
+                        class="clear-deco"
+                        style="color: black; font-size: 16px"
+                        >Login</a
+                    >
+                </button>
+                <button class="btn2">
+                    <a
+                        href="{{ url_for('auth.signup_page')}}"
+                        class="clear-deco"
+                        style="font-size: 16px"
+                        >Sign Up
+                    </a>
+                </button>
+                <!-- <button class="btn1">Login</button>
+                <button class="btn2">Sign Up</button> -->
             </div>
             <div class="toggle">
                 <a href="#" class="toggle-button">
@@ -62,7 +85,7 @@
                 <li><button class="btn2">Sign Up</button></li>
             </ul>
         </div>
-        <div class="container">
+        <div class="container1">
             {% with messages = get_flashed_messages(with_categories=true) %} {%
             if messages %}
             <div class="flashes">
@@ -82,16 +105,25 @@
                     id="email"
                     name="email"
                     placeholder="enter your email"
+                    style="color: black"
                     required
                 /><br /><br />
                 <label for="password">Password:</label><br />
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="enter your password"
-                    name="password"
-                    required
-                /><br /><br />
+                <div class="password-wrapper">
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="enter your password"
+                        name="password"
+                        required
+                    />
+                    <i
+                        class="fa fa-eye"
+                        id="togglePassword"
+                        style="cursor: pointer"
+                    ></i>
+                </div>
+                <br /><br />
                 <div class="form-group">
                     <button type="submit" class="btn">Login</button>
                 </div>

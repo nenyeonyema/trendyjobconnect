@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from ..models.user import Job, AppliedJob
-from ..services.job_service import create_job, apply_for_job
+from ..services.job_service import create_job, apply_for_job, get_job_by_id, get_all_jobs
 from ..validation.forms import AppliedJobForm, JobPostForm, JobSearchForm
 from ..services.job_service import get_all_jobs
 
@@ -49,6 +49,7 @@ def job_details(job_id):
 @job.route('/apply/<int:job_id>', methods=['GET', 'POST'])
 @login_required
 def apply_job(job_id):
+    job = get_job_by_id(job_id) 
     form = AppliedJobForm()
     if form.validate_on_submit():
         application_data = {
@@ -57,15 +58,16 @@ def apply_job(job_id):
             'last_name': request.form['last-name'],
             'email': request.form['email'],
             'phone_number': request.form['phone-number'],
-            'job_title': request.form['job-title'],
             'cover_letter': request.form['cover-letter'],
+            'resume': request.form['resume'],
+            'job_title': job.title,
             'job_id': job_id,
             'user_id': current_user.id
         }
         apply_for_job(application_data)
         flash('Application submitted successfully!', 'success')
-        return redirect(url_for('job.list_jobs'))
-    return render_template('apply_job.html', form=form, job_id=job_id)
+        return redirect(url_for('job.dashboard_jobseeker'))
+    return render_template('apply_job.html', form=form, job=job, job_id=job_id)
 
 @job.route('/dashboard/employer', methods=['GET'])
 @login_required
@@ -93,4 +95,4 @@ def search_jobs():
     if form.validate_on_submit():
         industry = request.form['industry']
         jobs = Job.query.filter_by(industry=industry).all()
-    return render_template('search_jobs.html', form=form, jobs=jobs)
+    return render_template('list_jobs.html', form=form, jobs=jobs)

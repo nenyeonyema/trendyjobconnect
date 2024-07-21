@@ -1,12 +1,13 @@
 from werkzeug.security import generate_password_hash
-from ..models.user import db, User
+from ..models.user import db, Employer, JobSeeker
 
 def create_employer(data):
     password_hash = generate_password_hash(data['password'])
-    employer = User(
+    employer = Employer(
         email=data['email'],
         password=password_hash,
         is_employer=True,
+        
         company_name=data['company_name'],
         # Add other employer-specific fields here
     )

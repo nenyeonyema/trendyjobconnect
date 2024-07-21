@@ -1,12 +1,11 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required
-from ..models.user import User
+from ..models.user import JobSeeker, Employer
 from ..services.user_service import create_employer, create_jobseeker
 from ..validation.forms import EmployerSignupForm, JobSeekerSignupForm, LoginForm
 from werkzeug.security import check_password_hash
 # from ..services.user_service import get_employer, get_jobseeker
 auth = Blueprint('auth', __name__)
-
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -14,16 +13,23 @@ def login():
     if form.validate_on_submit():
         email = request.form['email']
         password = request.form['password']
-        user = User.query.filter_by(email=email).first()
+
+        user1 = JobSeeker.query.filter_by(email=email).first()
+
+        user2 = Employer.query.filter_by(email=email).first()
+
+        user = user1 if user1 else user2
+
         if user and check_password_hash(user.password, password):
             login_user(user)
             flash('Login successful!', 'success')
-            if user.is_employer:
+            if isinstance(user, Employer):
                 return redirect(url_for('job.dashboard_employer'))
             else:
                 return redirect(url_for('job.dashboard_jobseeker'))
         else:
             flash('Invalid email or password.', 'danger')
+
     return render_template('login.html', form=form)
 
 

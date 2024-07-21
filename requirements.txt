@@ -10,3 +10,4 @@ python-dotenv
 WTForms 
 flask-wtf
 email_validator
+pymysql

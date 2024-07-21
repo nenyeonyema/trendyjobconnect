@@ -14,15 +14,15 @@
     <body>
         <nav class="nav-bar">
             <div class="con-logo" id="home">
-                <a href="/"><img src="../static/images/my-logo/my-logo3.png" alt="logo" class="my-logo" id="logo"></a>
+                <a href="{{ url_for('homepage.home')}}"<img src="../static/images/my-logo/my-logo3.png" alt="logo" class="my-logo" id="logo"></a>
             </div>
             <ul class="nav-list">
-                <li><a href="#">Find A Job</a></li>
-                <li><a href="#">Post A Job</a></li>
+                <li><a href="{{ url_for('auth.login')}}">Find A Job</a></li>
+                <li><a href="{{ url_for('auth.login')}}">Post A Job</a></li>
             </ul>
             <div class="reg">
-                <button class="btn1"><a href="/login" class="cleanup">Login</a></button>
-                <button class="btn2"><a href="/signup" class="clear-deco">Sign Up</a></button>
+                <button class="btn1"><a href="{{ url_for('auth.login')}}" class="cleanup">Login</a></button>
+                <button class="btn2"><a href="{{ url_for('auth.signup_page')}}" class="clear-deco">Sign Up</a></button>
             </div>
             <div class="toggle">
                 <a href="#" class="toggle-button">
@@ -35,10 +35,10 @@
         </nav>
         <div class="mobile-nav">
             <ul>
-                <li><a href="#">Find A Job</a></li>
-                <li><a href="/login">Post A Job</a></li>
-                <li><button class="btn1"><a href="/login" class="clear-deco">Login</a>Login</button></li>
-                <li><button class="btn2"><a href="/signup" class="clear-deco">Sign Up</a></button></li>
+                <li><a href="{{ url_for('auth.login')}}"Find A Job</a></li>
+                <li><a href="{{ url_for('auth.login')}}">Post A Job</a></li>
+                <li><button class="btn1"><a href="{{ url_for('auth.login')}}" class="clear-deco">Login</a></button></li>
+                <li><button class="btn2"><a href="{{ url_for('auth.signup_page')}}" class="clear-deco">Sign Up</a></button></li>
             </ul>
         </div>
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -121,7 +121,7 @@
                     <button type="submit" class="btn">Sign Up</button>
                 </div>
             </form>
-            <p>Already have an account? <a href="signup.html">Login</a></p>
+            <p>Already have an account? <a href="{{ url_for('auth.login')}}">Login</a></p>
         </div>
          <!-- Footer -->
         <footer>

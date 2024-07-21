@@ -107,3 +107,19 @@ form p a {
         border-image: linear-gradient(#00ccff, #d500f9) 1 rotate(360deg);
     }
 }
+
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 30px;
+}
+
+.password-wrapper .fa-eye {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}

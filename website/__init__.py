@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
-from config import Config
+# from config import Config
 import os
 from dotenv import load_dotenv
 
@@ -14,7 +14,7 @@ bcrypt = Bcrypt()
 def create_app():
     app = Flask(__name__)
     load_dotenv()
-    app.config.from_object(Config)
+    app.config.from_object('config.Config')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
         'SQLALCHEMY_DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -26,10 +26,6 @@ def create_app():
     login_manager.login_views = 'auth.login'
     login_manager.login_message_category = 'info'
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(int(user_id))
-
     from .views.home import homepage
     from .views.auth import auth
     from .views.job import job
@@ -38,11 +34,16 @@ def create_app():
     app.register_blueprint(auth)
     app.register_blueprint(job)
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(int(user_id))
-
     login_manager.login_view = 'auth.login'
     login_manager.login_message_category = 'info'
 
     return app
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    from .models.user import JobSeeker, Employer
+    user = JobSeeker.query.get(int(user_id))
+    if user is None:
+        user = Employer.query.get(int(user_id))
+    return user

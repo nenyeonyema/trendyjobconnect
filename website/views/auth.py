@@ -7,6 +7,7 @@ from werkzeug.security import check_password_hash
 # from ..services.user_service import get_employer, get_jobseeker
 auth = Blueprint('auth', __name__)
 
+
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -50,26 +51,23 @@ def signup_page():
 def signup_employer():
     form = EmployerSignupForm()
     if form.validate_on_submit():
-        email = request.form['email']
+
+        new_employer = {
+            'email': request.form['email'],
+            'password': request.form['password'],
+            'confirm_password': request.form['confirm-password'],
+            'company_name': request.form['company-name'],
+            'company_logo': request.form['company-logo'],
+            'company_website': request.form['company-website'],
+            'industry': request.form['industry'],
+        }
         try:
-            existing_user = User.query.filter_by(email=email).first()
-            if existing_user:
-                flash('Email is already registered. Please log in.', 'danger')
-            else:
-                new_employer = {
-                    'email': request.form['email'],
-                    'password': request.form['password'],
-                    'confirm_password': request.form['confirm-password'],
-                    'company_name': request.form['comapny-name'],
-                    'company_logo': request.form['company-logo'],
-                    'company_website': request.form['company-website'],
-                    'is_employer': request.form['is-employer'].lower() == 'true'
-                }
-                user = create_employer(new_employer)
-                flash('Account created successfully!', 'success')
-                return redirect(url_for('auth.login'))
+            create_employer(new_employer)
+            flash('Account created successfully!', 'success')
+            return redirect(url_for('auth.login'))
         except Exception as e:
-            flash(f'An error occurred while creating the account: {str(e)}', 'danger')
+            flash(f'An error occurred while creating the account: {str(e)}',
+                  'danger')
 
     return render_template('signup_employer.html', form=form)
 
@@ -78,25 +76,19 @@ def signup_employer():
 def signup_jobseeker():
     form = JobSeekerSignupForm()
     if form.validate_on_submit():
-        email = request.form['email']
+        new_jobseeker = {
+            'email': request.form['email'],
+            'password': request.form['password'],
+            'confirm_password': request.form['confirm-password'],
+            'first_name': request.form['first-name'],
+            'last_name': request.form['last-name'],
+            'profile_pic': request.form['profile-pic'],
+            'current_position': request.form['current-position']
+        }
         try:
-            existing_user = User.query.filter_by(email=email).first()
-            if existing_user:
-                flash('Email is already registered. Please log in.', 'danger')
-            else:
-                new_jobseeker = {
-                    'email': request.form['email'],
-                    'password': request.form['password'],
-                    'confirm_password': request.form['confirm-password'],
-                    'first_name': request.form['first-name'],
-                    'last-name': request.form['last-name'],
-                    'profile_pic': request.form['profile-pic'],
-                    'current_position': request.form['current-position']
-                }
-                user = create_jobseeker(new_jobseeker)
-                flash('Account created successfully!', 'success')
-                return redirect(url_for('auth.login'))
+            create_jobseeker(new_jobseeker)
+            flash('Account created successfully!', 'success')
+            return redirect(url_for('auth.login'))
         except Exception as e:
-            flash(f'An error occurred while creating the account: {str(e)}', 'danger')
-
+            flash(f'Error creating account: {str(e)}', 'danger')
     return render_template('signup_jobseeker.html', form=form)

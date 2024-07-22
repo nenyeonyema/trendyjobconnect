@@ -20,6 +20,11 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
+
+    with app.app_context():
+        from .models.user import JobSeeker, Job, Employer, AppliedJob 
+        db.create_all()
+        
     login_manager.init_app(app)
     bcrypt.init_app(app)
 

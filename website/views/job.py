@@ -2,8 +2,8 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from ..models.user import Job, AppliedJob
 from ..services.job_service import create_job, apply_for_job, get_job_by_id, get_all_jobs
+from ..services.user_service import get_employer_by_id, get_jobseeker_by_id
 from ..validation.forms import AppliedJobForm, JobPostForm, JobSearchForm
-from ..services.job_service import get_all_jobs
 
 job = Blueprint('job', __name__)
 
@@ -15,22 +15,23 @@ def post_job():
         flash('Only employers can post jobs.', 'danger')
         return redirect(url_for('auth.login'))
     form = JobPostForm()
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            job_data = {
-                'company_name': request.form['company-name'],
-                'title': request.form['job-title'],
-                'description': request.form['job-description'],
-                'responsibilities': request.form['responsibilities'],
-                'requirements': request.form['requirements'],
-                'location': request.form['job-location'],
-                'expires_on': request.form['expires-on'],
-                'type': request.form['job-type'],
-                'benefits': request.form['benefits'],
-                'user_id': current_user.id
-            }
 
-        job = create_job(current_user.id, job_data)
+    if form.validate_on_submit():
+        job_data = {
+            'company_name': request.form['company-name'],
+            'title': request.form['job-title'],
+            'description': request.form['job-description'],
+            'responsibilities': request.form['responsibilities'],
+            'requirements': request.form['requirements'],
+            'location': request.form['job-location'],
+            'expires_on': request.form['expires-on'],
+            'industry': request.form['industry'],
+            'type': request.form['job-type'],
+            'benefits': request.form['benefits'],
+            'user_id': current_user.id
+        }
+
+        job = create_job(job_data)
         flash('Job posted successfully!', 'success')
         return redirect(url_for('job.dashboard_employer'))
     return render_template('post_job.html')
@@ -54,6 +55,9 @@ def job_details(job_id):
 @login_required
 def apply_job(job_id):
     job = get_job_by_id(job_id)
+    if job is None:
+        flash('Job not found.', 'danger')
+        return redirect(url_for('job.list_jobs'))
     form = AppliedJobForm()
     if form.validate_on_submit():
         application_data = {

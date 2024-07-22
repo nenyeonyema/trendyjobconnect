@@ -57,6 +57,9 @@ class JobPostForm(FlaskForm):
                                      validators=[DataRequired()])
     requirements = TextAreaField('Requirements', validators=[DataRequired()])
     industry = StringField('Job Industry', validators=[DataRequired()])
+    expires_on = DateField('Job Expiration',
+                           format='%Y-%m-%d',
+                           validators=[DataRequired()])
     job_location = StringField('Job Location', validators=[DataRequired()])
     job_type = SelectField('Job Type',
                            choices=[('full-time', 'Full Time'),

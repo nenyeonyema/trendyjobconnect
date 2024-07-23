@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app
 from flask_login import login_required, current_user
 from ..models.user import Job, AppliedJob
 from ..services.job_service import create_job, apply_for_job, get_job_by_id, get_all_jobs
+from ..services.apicalls import job_board, fetch_jobs, search_jobs, list_jobs
 from ..services.user_service import get_employer_by_id, get_jobseeker_by_id
 from ..validation.forms import AppliedJobForm, JobPostForm, JobSearchForm
 
@@ -40,8 +41,15 @@ def post_job():
 @job.route('/jobs', methods=['GET'])
 @login_required
 def list_jobs():
-    jobs = get_all_jobs()
-    return render_template('list_jobs.html', jobs=jobs)
+    jobsapi = list_jobs()
+
+    if not jobs:
+        return jsonify({'error': 'No jobs found!'}), 404
+
+    return jsonify({'jobs': jobs}), 200
+
+    jobsdb = get_all_jobs()
+    return render_template('list_jobs.html', jobsdb=jobsdb, jobsapi=jobsapi)
 
 
 @job.route('/job/<int:job_id>', methods=['GET'])
@@ -108,9 +116,31 @@ def dashboard_jobseeker():
 
 @job.route('/search', methods=['GET', 'POST'])
 def search_jobs():
+    if request.method == 'POST':
+        query = request.form.get('query')
+
+        if not query:
+            flash('Query is required!', 'danger')
+            return redirect(url_for('homepage.home'))
+
+        jobs = fetch_jobs(query=query)
+
+        if not jobs:
+            flash('No jobs found!', 'info')
+
+        return redirect(url_for('homepage.home'), jobs=jobs)
+
+    return render_template('home.html')
+
+
+@job.route('/dashboard_search', methods=['GET', 'POST'])
+@login_required
+def search_job_board():
+    job_board = job_board()
     form = JobSearchForm()
     jobs = []
     if form.validate_on_submit():
         industry = request.form['industry']
         jobs = Job.query.filter_by(industry=industry).all()
-    return render_template('list_jobs.html', form=form, jobs=jobs)
+        return redirect(url_for('job.dashboard_employer'))
+    return render_template('list_jobs.html')

@@ -40,25 +40,37 @@
             </div>
         </div>
         {% block content %}
-        <div class="service-details" data-aos="fade-up">
-            
-            <div class="inner-services inner-services1" data-aos="fade-up">
-                <div class="first-service">
-                    {% for dbjob in dbjobs %}
-                    <a href="{{ url_for('job.apply_job', job_id=job.id) }}" class="list-group-item list-group-item-action">
-                        <h5 class="mb-1" class="service2">{{ dbjob.title }}</h5>
-                        <p class="mb-1"  class="service1">{{ dbjob.description }}</p>
-                        <small  class="service1">{{ dbjob.company_name }} - {{ dbjob.location }}</small>
-                    </a>
-                    <div class="service-arrow" style="margin-left: 300px;">
-                        <!-- <i class="fa fa-long-arrow-right" aria-hidden="true"></i> -->
-                        <span><a href="{{ url_for('job.apply_job', job_id=job.id) }}" class="clear-deco">Apply</a></span>
+        {% if jobs %}
+                {% for job in jobs %}   
+
+                <div class="inner-services inner-services1" data-aos="fade-up">
+                    <div class="first-service">
+                        <div>
+                            <span class="service2">{{ job.title}}</span
+                            ><br />
+                            <span class="service1">{{ job.location.display_name }}</span>
+                        </div>
                     </div>
-                    {% endfor %}
-                   
+                    <div class="job3">
+                        <span class="service3"
+                            >{{ job.contract_type }}<br />{{ job.location }}</span
+                        >
+                        <span>{{ job.salary_min }} - {{ job.salary_max }}</span>
+                    </div>
+                    <div class="service-arrow">
+                        <!-- <i class="fa fa-long-arrow-right" aria-hidden="true"></i> -->
+                        <span
+                            <a href="{{ url_for('job.apply_job', job_id=job.id) }}">Apply</a>
+                            ></span
+                        >
+                    </div>
                 </div>
-            </div>
+            {% endfor %}
+        {% else %}
+            <p>No jobs found.</p>
+        {% endif %}
         </div>
+        {% if jobs %}
         <div class="inner-services inner-services1" data-aos="fade-up">
             <div class="first-service">
                 {% for job in jobs %}
@@ -74,6 +86,9 @@
                 {% endfor %}
 
             </div>
+        {% else %}
+            <p>No jobs found.</p>
+        {% endif %}
         </div>
         {% endblock %}
     </section>

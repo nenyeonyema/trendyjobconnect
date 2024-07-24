@@ -2,8 +2,8 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from flask_login import login_required, current_user
 from ..models.user import Job, AppliedJob
 from ..services.job_service import create_job, apply_for_job, get_job_by_id, get_all_jobs
-from ..services.apicalls import job_board, fetch_jobs, search_jobs, list_jobs
-from ..services.user_service import get_employer_by_id, get_jobseeker_by_id
+from ..services.apicalls import fetch_jobs, fetch_jobs_from_adzuna, fetch_jobs_from_joobleapi
+from ..services.user_service import get_jobseeker_by_id, get_employer_by_id
 from ..validation.forms import AppliedJobForm, JobPostForm, JobSearchForm
 
 job = Blueprint('job', __name__)
@@ -38,18 +38,27 @@ def post_job():
     return render_template('post_job.html')
 
 
-@job.route('/jobs', methods=['GET'])
-@login_required
-def list_jobs():
-    jobsapi = list_jobs()
+@job.route('/search_jobs', methods=['GET', 'POST'])
+def search_jobs():
 
-    if not jobs:
-        return jsonify({'error': 'No jobs found!'}), 404
+    search_query = request.form.get('search_query', '')
+    
+    adzuna_jobs = fetch_jobs_from_adzuna(current_app, search_query)
+   
+    print(adzuna_jobs)
 
-    return jsonify({'jobs': jobs}), 200
+    return render_template('list_jobs.html', jobs=adzuna_jobs)
 
-    jobsdb = get_all_jobs()
-    return render_template('list_jobs.html', jobsdb=jobsdb, jobsapi=jobsapi)
+
+# @job.route('/list_jobs', methods=['GET'])
+# def list_jobs():
+#     jobs = fetch_jobs(current_app)
+
+#     if not jobs:
+#         return flash('error No jobs found!'), 404
+#     return render_template('list_jobs.html', jobs=jobs)
+#     jobsdb = get_all_jobs()
+#     return render_template('list_jobs.html', jobsdb=jobsdb, jobs=jobs)
 
 
 @job.route('/job/<int:job_id>', methods=['GET'])
@@ -107,38 +116,19 @@ def dashboard_jobseeker():
     if current_user.is_employer:
         flash('Access denied.', 'danger')
         return redirect(url_for('auth.login'))
-    user = get_user_by_id(current_user.id)
+    user = get_jobseeker_by_id(current_user.id)
     applied_jobs = AppliedJob.query.filter_by(user_id=current_user.id).all()
     return render_template('dashboard_jobseeker.html',
                            applied_jobs=applied_jobs,
                            email=current_user)
 
 
-@job.route('/search', methods=['GET', 'POST'])
-def search_jobs():
-    if request.method == 'POST':
-        query = request.form.get('query')
-
-        if not query:
-            flash('Query is required!', 'danger')
-            return redirect(url_for('homepage.home'))
-
-        jobs = fetch_jobs(query=query)
-
-        if not jobs:
-            flash('No jobs found!', 'info')
-
-        return redirect(url_for('homepage.home'), jobs=jobs)
-
-    return render_template('home.html')
-
-
 @job.route('/dashboard_search', methods=['GET', 'POST'])
 @login_required
-def search_job_board():
-    job_board = job_board()
+def search_job_db():
+    # job_db = fetch_jobs_db()
     form = JobSearchForm()
-    jobs = []
+    # jobs = []
     if form.validate_on_submit():
         industry = request.form['industry']
         jobs = Job.query.filter_by(industry=industry).all()

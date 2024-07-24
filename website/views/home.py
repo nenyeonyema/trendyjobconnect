@@ -7,5 +7,4 @@ homepage = Blueprint('homepage', __name__)
 @homepage.route('/', methods=['GET'])
 def home():
     jobs = fetch_jobs(current_app)
-    print(jobs)
     return render_template('home.html', jobs=jobs)

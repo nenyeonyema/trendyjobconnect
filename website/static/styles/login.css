@@ -14,7 +14,7 @@ body {
     /* justify-content: center; */
 }
 
-.container {
+.container1 {
     display: grid;
     margin: auto;
     align-items: center;

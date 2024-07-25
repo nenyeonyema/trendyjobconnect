@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 import os
@@ -15,6 +16,8 @@ def create_app():
     app.config.from_object(Config)
 
     db.init_app(app)
+    bcrypt.init_app(app)
+    migrate = Migrate(app, db)
 
     with app.app_context():
         from .models.user import JobSeeker, Job, Employer, AppliedJob
@@ -33,9 +36,6 @@ def create_app():
     app.register_blueprint(homepage)
     app.register_blueprint(auth)
     app.register_blueprint(job)
-
-    login_manager.login_view = 'auth.login'
-    login_manager.login_message_category = 'info'
 
     return app
 

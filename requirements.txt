@@ -11,3 +11,4 @@ WTForms
 flask-wtf
 email_validator
 pymysql
+requests

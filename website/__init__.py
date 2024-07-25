@@ -7,8 +7,8 @@ import os
 from config import Config
 
 db = SQLAlchemy()
-login_manager = LoginManager()
 bcrypt = Bcrypt()
+login_manager = LoginManager()
 
 
 def create_app():
@@ -18,15 +18,13 @@ def create_app():
     db.init_app(app)
     bcrypt.init_app(app)
     migrate = Migrate(app, db)
+    login_manager.init_app(app)
 
     with app.app_context():
         from .models.user import JobSeeker, Job, Employer, AppliedJob
         db.create_all()
 
-    login_manager.init_app(app)
-    bcrypt.init_app(app)
-
-    login_manager.login_views = 'auth.login'
+    login_manager.login_view = 'auth.login'
     login_manager.login_message_category = 'info'
 
     from .views.home import homepage

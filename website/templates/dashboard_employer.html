@@ -36,7 +36,15 @@
                         id="logo"
                 /></a>
             </div>
-
+            <ul class="nav-list">
+                <li>
+                    <h5>
+                        <a href="{{ url_for('job.dashboard_employer') }}"
+                            >Employer</a
+                        >
+                    </h5>
+                </li>
+            </ul>
             <div class="reg">
                 <button class="btn2">
                     <a href="/logout" class="clear-deco">Logout</a>
@@ -70,9 +78,9 @@
         <div class="dashboard-container">
             <aside class="sidebar">
                 <div class="profile">
-                    <img src="{{ companylogo }}" alt="Profile Picture" />
-                    <h3>{{ companyname }}</h3>
-                    <p>{{ companylocation }}</p>
+                    <img src="{{ user.company_logo }}" alt="Profile Picture" />
+                    <h3>{{ user.company_name }}</h3>
+                    <p>{{ user.company_location }}</p>
                 </div>
                 <nav class="sidebar-nav">
                     <ul>
@@ -93,9 +101,9 @@
                 <section class="job-listings">
                     <h2>Posted Jobs</h2>
                     <div class="job">
-                        <h3>Front-end Developer</h3>
-                        <p>Location: New York, NY</p>
-                        <p>Posted on: 2024-07-08</p>
+                        <h3>Job Title:</h3>
+                        <p>Location:</p>
+                        <p>Posted on:</p>
                         <div class="job-actions">
                             <button class="action-btn update-job">
                                 Update
@@ -106,9 +114,9 @@
                         </div>
                     </div>
                     <div class="job">
-                        <h3>Back-end Developer</h3>
-                        <p>Location: San Francisco, CA</p>
-                        <p>Posted on: 2024-07-07</p>
+                        <h3>Job Title:</h3>
+                        <p>Location:</p>
+                        <p>Posted on:</p>
                         <div class="job-actions">
                             <button class="action-btn update-job">
                                 Update

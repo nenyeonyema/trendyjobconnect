@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app
 from flask_login import login_required, current_user
-from ..models.user import Job, AppliedJob
+from ..models.user import Job, AppliedJob, Employer
 from ..services.job_service import create_job, apply_for_job, get_job_by_id, get_all_jobs
 from ..services.apicalls import fetch_jobs, fetch_jobs_from_adzuna, fetch_jobs_from_joobleapi
 from ..services.user_service import get_jobseeker_by_id, get_employer_by_id
@@ -98,16 +98,12 @@ def apply_job(job_id):
 @job.route('/dashboard/employer', methods=['GET'])
 @login_required
 def dashboard_employer():
-    if not current_user.is_employer:
-        flash('Access denied.', 'danger')
-        return redirect(url_for('auth.login'))
+    # if not current_user.is_employer:
+    #     flash('Access denied.', 'danger')
+    #     return redirect(url_for('auth.login'))
+    user = Employer.query.filter_by(id=current_user.id).first()
     jobs = Job.query.filter_by(user_id=current_user.id).all()
-    return render_template('dashboard_employer.html',
-                           jobs=jobs,
-                           companyname=current_user.company_name,
-                           companylocation=current_user.company_location,
-                           companylogo=current_user.company_logo,
-                           email=current_user.email)
+    return render_template('dashboard_employer.html', jobs=jobs, user=user)
 
 
 @job.route('/dashboard/jobseeker', methods=['GET'])
@@ -116,11 +112,12 @@ def dashboard_jobseeker():
     if current_user.is_employer:
         flash('Access denied.', 'danger')
         return redirect(url_for('auth.login'))
-    user = get_jobseeker_by_id(current_user.id)
-    applied_jobs = AppliedJob.query.filter_by(user_id=current_user.id).all()
+    # user = get_jobseeker_by_id(current_user.id)
+    jobs = fetch_jobs(current_app)
+    # applied_jobs = AppliedJob.query.filter_by(user_id=current_user.id).all()
     return render_template('dashboard_jobseeker.html',
-                           applied_jobs=applied_jobs,
-                           email=current_user)
+                           jobs=jobs,
+                           user=current_user)
 
 
 @job.route('/dashboard_search', methods=['GET', 'POST'])

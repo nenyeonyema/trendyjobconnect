@@ -5,17 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link
             rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        />
-        <link
             href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css"
-            rel="stylesheet"
-        />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-            crossorigin="anonymous"
         />
         <link
             rel="stylesheet"
@@ -43,27 +33,15 @@
                 /></a>
             </div>
             <ul class="nav-list">
-                <li>
-                    <a href="{{ url_for('job.search_jobs')}}">Find A Job</a>
-                </li>
-                <li><a href="#">Post A Job</a></li>
+                <li><a href="/login">Find A Job</a></li>
+                <li><a href="/login">Post A Job</a></li>
             </ul>
             <div class="reg">
                 <button class="btn1">
-                    <a
-                        href="{{ url_for('auth.login') }}"
-                        class="cleanup"
-                        style="color: black; font-size: 16px"
-                        >Login</a
-                    >
+                    <a href="/login" class="cleanup">Login</a>
                 </button>
                 <button class="btn2">
-                    <a
-                        href="{{ url_for('auth.signup_page') }}"
-                        class="clear-deco"
-                        style="font-size: 16px"
-                        >Sign Up</a
-                    >
+                    <a href="/signup" class="clear-deco">Sign Up</a>
                 </button>
             </div>
             <div class="toggle">
@@ -79,24 +57,16 @@
         </nav>
         <div class="mobile-nav">
             <ul>
-                <li>
-                    <a href="{{ url_for('auth.signup_page') }}">Find A Job</a>
-                </li>
-                <li><a href="{{ url_for('auth.login') }}">Post A Job</a></li>
+                <li><a href="/signup">Find A Job</a></li>
+                <li><a href="/login">Post A Job</a></li>
                 <li>
                     <button class="btn1">
-                        <a href="{{ url_for('auth.login') }}" class="clear-deco"
-                            >Login</a
-                        >
+                        <a href="/login" class="clear-deco">Login</a>
                     </button>
                 </li>
                 <li>
                     <button class="btn2">
-                        <a
-                            href="{{ url_for('auth.signup_page') }}"
-                            class="clear-deco"
-                            >Sign Up</a
-                        >
+                        <a href="/signup" class="clear-deco">Sign Up</a>
                     </button>
                 </li>
             </ul>
@@ -127,53 +97,88 @@
             <form
                 id="recruiter-signup-form"
                 method="POST"
-                action="{{ url_for('auth.employer_signup') }}"
+                action="{{ url_for('auth.signup_employer') }}"
                 enctype="multipart/form-data"
             >
-                <!-- Group 1: Company Details -->
+                {{ form.hidden_tag() }}
                 <fieldset>
                     <legend>Company Details</legend>
                     <br />
                     <div class="form-group">
-                        {{ form.company_name.label }}<br />
-                        {{ form.company_name(class_="form-control",
-                        placeholder="Enter company name", required=True) }}<br /><br />
+                        <label for="company-name">Company Name</label>
+                        {{ form.company_name(class="form-control") }} {% if
+                        form.company_name.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.company_name.errors[0] }}
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="form-group">
-                        {{ form.company_website.label }}<br />
-                        {{ form.company_website(class_="form-control",
-                        placeholder="Enter company website", required=True)
-                        }}<br /><br />
+                        <label for="company-website">Company Website</label>
+                        {{ form.company_website(class="form-control") }} {% if
+                        form.company_website.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.company_website.errors[0] }}
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="form-group">
-                        {{ form.company_logo.label }}<br />
-                        {{ form.company_logo(class_="form-control",
-                        accept="image/*") }}<br /><br />
+                        <label for="company-logo">Upload Company Logo</label>
+                        {{ form.company_logo(class="form-control") }} {% if
+                        form.company_logo.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.company_logo.errors[0] }}
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="form-group">
-                        {{ form.industry.label }}<br />
-                        {{ form.industry(class_="form-control",
-                        placeholder="Enter industry/sector") }}<br /><br />
+                        <label for="company-location">Company Location</label>
+                        {{ form.company_location(class="form-control") }} {% if
+                        form.company_location.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.company_location.errors[0] }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="industry">Industry/Sector</label>
+                        {{ form.industry(class="form-control") }} {% if
+                        form.industry.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.industry.errors[0] }}
+                        </div>
+                        {% endif %}
                     </div>
                 </fieldset>
-                <!-- Group 4: Login Details -->
                 <fieldset>
                     <legend>Login Details</legend>
                     <br />
                     <div class="form-group">
-                        {{ form.email.label }}<br />
-                        {{ form.email(class_="form-control", placeholder="Enter
-                        email", required=True) }}<br /><br />
+                        <label for="email">Email</label>
+                        {{ form.email(class="form-control") }} {% if
+                        form.email.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.email.errors[0] }}
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="form-group">
-                        {{ form.password.label }}<br />
-                        {{ form.password(class_="form-control",
-                        placeholder="Enter password", required=True) }}<br /><br />
+                        <label for="password">Password</label>
+                        {{ form.password(class="form-control") }} {% if
+                        form.password.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.password.errors[0] }}
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="form-group">
-                        {{ form.confirm_password.label }}<br />
-                        {{ form.confirm_password(class_="form-control",
-                        placeholder="Confirm password", required=True) }}<br /><br />
+                        <label for="confirm-password">Confirm Password</label>
+                        {{ form.confirm_password(class="form-control") }} {% if
+                        form.confirm_password.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.confirm_password.errors[0] }}
+                        </div>
+                        {% endif %}
                     </div>
                 </fieldset>
                 <div
@@ -192,7 +197,7 @@
             </form>
             <p>
                 Already have an account?
-                <a href="{{ url_for('auth.login')}}">Login</a>
+                <a href="{{ url_for('auth.login') }}">Login</a>
             </p>
         </div>
         <!-- Footer -->
@@ -229,9 +234,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         <script>
-            AOS.init({
-                duration: 500,
-            });
+            AOS.init({ duration: 500 });
         </script>
     </body>
 </html>

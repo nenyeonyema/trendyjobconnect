@@ -3,24 +3,17 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="../static/styles/signup.jobseeker.css" />
-        <link rel="stylesheet" href="../static/styles/login.css" />
         <link
-            href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css"
             rel="stylesheet"
+            href="{{ url_for('static', filename='styles/signup.jobseeker.css') }}"
         />
         <link
             rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+            href="{{ url_for('static', filename='styles/login.css') }}"
         />
         <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Sofia|Poppins&effect=neon|outline|emboss|shadow-multiple|3d-float"
-        />
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         />
         <title>Login - trendyJobconnect</title>
     </head>
@@ -29,19 +22,35 @@
             <div class="con-logo">
                 <a href="/"
                     ><img
-                        src="../static/images/my-logo/my-logo3.png"
+                        src="{{ url_for('static', filename='images/my-logo/my-logo3.png') }}"
                         alt="logo"
                         class="my-logo"
                         id="logo"
                 /></a>
             </div>
             <ul class="nav-list">
-                <li><a href="#">Find A Job</a></li>
+                <li>
+                    <a href="{{ url_for('job.search_jobs')}}">Find A Job</a>
+                </li>
                 <li><a href="#">Post A Job</a></li>
             </ul>
             <div class="reg">
-                <button class="btn1">Login</button>
-                <button class="btn2">Sign Up</button>
+                <button class="btn1">
+                    <a
+                        href="{{ url_for('auth.login') }}"
+                        class="cleanup clear-deco"
+                        style="color: black; font-size: 16px"
+                        >Login</a
+                    >
+                </button>
+                <button class="btn2">
+                    <a
+                        href="{{ url_for('auth.signup_page') }}"
+                        class="clear-deco"
+                        style="font-size: 16px"
+                        >Sign Up</a
+                    >
+                </button>
             </div>
             <div class="toggle">
                 <a href="#" class="toggle-button">
@@ -62,40 +71,102 @@
                 <li><button class="btn2">Sign Up</button></li>
             </ul>
         </div>
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %}
+        <div class="container mt-4">
+            {% for category, message in messages %}
+            <div
+                class="alert alert-{{ category }} alert-dismissible fade show"
+                role="alert"
+            >
+                {{ message }}
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="alert"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
 
-        <div class="container">
+        <div class="container1">
             <h2>Login</h2>
-            <form action="/login" method="post">
-                <label for="email">Email:</label><br />
-                <input
-                    type="text"
-                    id="email"
-                    name="email"
-                    placeholder="enter your email"
-                    required
-                /><br /><br />
-                <label for="password">Password:</label><br />
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="enter your password"
-                    name="password"
-                    required
-                /><br /><br />
+            <form method="POST" action="{{ url_for('auth.login_employer') }}">
+                {{ form.hidden_tag() }}
                 <div class="form-group">
-                    <button type="submit" class="btn">Login</button>
+                    {{ form.email.label }}<br />
+                    {{ form.email(class="form-control", placeholder="Enter your
+                    email", style="color: black") }}<br /><br />
+                </div>
+                <div class="form-group">
+                    {{ form.password.label }}<br />
+                    <div class="password-wrapper">
+                        {{ form.password(class_="form-control",
+                        placeholder="Enter your password") }}
+                        <i
+                            class="fa fa-eye"
+                            id="togglePassword"
+                            style="cursor: pointer"
+                        ></i>
+                    </div>
+                    <br /><br />
+                </div>
+                <div class="form-group">
+                    <button
+                        type="submit"
+                        class="btn"
+                        style="background-color: lightgrey"
+                    >
+                        Login
+                    </button>
                 </div>
                 <p>
                     Don't have an account?
-                    <a href="/sign-up/employer">Sign Up</a>
+                    <a href="{{ url_for('auth.signup_page') }}">Sign Up</a>
                 </p>
             </form>
         </div>
+        <!-- Footer -->
+        <footer>
+            <div class="footer">
+                <div>
+                    <p>
+                        Copyright © 2024 <span>trendyJobconnect.</span> All
+                        rights reserved.
+                    </p>
+                </div>
+                <div>
+                    <a href="https://www.linkedin.com/in/chinenyeonyema/"
+                        >Contact Us</a
+                    >
+                </div>
+                <div class="service-arrow">
+                    <a href="#home"
+                        ><i
+                            class="fa fa-long-arrow-right"
+                            aria-hidden="true"
+                        ></i
+                    ></a>
+                </div>
+            </div>
+        </footer>
+        <script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
         <script
-            type="text/javascript"
-            src="{{ url_for('static', filename='../static/scripts/home.js') }}"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"
         ></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 500,
+            });
+        </script>
     </body>
 </html>

@@ -15,30 +15,36 @@ import os
 auth = Blueprint('auth', __name__)
 
 
-@auth.route('/login', methods=['GET', 'POST'])
-def login():
+@auth.route('/login/jobseeker', methods=['GET', 'POST'])
+def login_jobseeker():
     form = LoginForm()
     if form.validate_on_submit():
-        email = request.form['email']
-        password = request.form['password']
-
-        user1 = JobSeeker.query.filter_by(email=email).first()
-
-        user2 = Employer.query.filter_by(email=email).first()
-
-        user = user1 if user1 else user2
-
+        email = form.email.data
+        password = form.password.data
+        user = JobSeeker.query.filter_by(email=email).first()
         if user and bcrypt.check_password_hash(user.password, password):
             login_user(user)
             flash('Login successful!', 'success')
-            if isinstance(user, Employer):
-                return redirect(url_for('job.dashboard_employer'))
-            else:
-                return redirect(url_for('job.dashboard_jobseeker'))
+            return redirect(url_for('job.dashboard_jobseeker'))
         else:
             flash('Invalid email or password.', 'danger')
+    return render_template('login_jobseeker.html', form=form)
 
-    return render_template('login.html', form=form)
+
+@auth.route('/login/employer', methods=['GET', 'POST'])
+def login_employer():
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        user = Employer.query.filter_by(email=email).first()
+        if user and bcrypt.check_password_hash(user.password, password):
+            login_user(user)
+            flash('Login successful!', 'success')
+            return redirect(url_for('job.dashboard_employer'))
+        else:
+            flash('Invalid email or password.', 'danger')
+    return render_template('login_employer.html', form=form)
 
 
 @auth.route('/logout')
@@ -58,23 +64,31 @@ def signup_page():
 def signup_employer():
     form = EmployerSignupForm()
     if form.validate_on_submit():
+        company_logo = form.company_logo.data
+        company_logo_url = 'logo_pic.jpg'
+        if company_logo:
+            logo_filename = secure_filename(company_logo.filename)
+            filepath = os.path.join(current_app.config['UPLOAD_PATH'],
+                                    logo_filename)
+            company_logo.save(filepath)
+            company_logo_url = f'uploads/{logo_filename}'
 
-        new_employer = {
+        employer_data = {
             'email': form.email.data,
             'password': form.password.data,
             'confirm_password': form.confirm_password.data,
+            'company_location': form.company_location.data,
             'company_name': form.company_name.data,
-            'company_logo': form.company_logo.data,
-            'company_website': form.company_website.data,
-            'industry': form.industry.data
+            'company_logo': company_logo_url,
+            'company_website': form.company_website.data
         }
+
         try:
-            create_employer(new_employer)
-            flash('Account created successfully!', 'success')
-            return redirect(url_for('auth.login'))
-        except Exception as e:
-            flash(f'An error occurred while creating the account: {str(e)}',
-                  'danger')
+            create_employer(employer_data)
+            flash('Employer account created successfully!', 'success')
+            return redirect(url_for('auth.login_employer'))
+        except ValueError as e:
+            flash(str(e), 'danger')
 
     return render_template('signup_employer.html', form=form)
 
@@ -87,9 +101,8 @@ def signup_jobseeker():
         if form.validate_on_submit():
             logging.info("Form validated successfully")
 
-            # upload_folder = 'path/to/save'
+            profile_pic = form.profile_pic.data
 
-            profile_pic = request.files['profile_pic']
             if profile_pic:
                 pic_filename = secure_filename(profile_pic.filename)
                 filename = os.path.join(current_app.config['UPLOAD_PATH'],
@@ -115,8 +128,36 @@ def signup_jobseeker():
                 create_jobseeker(new_jobseeker)
                 print('Account created successfully!', 'success')
                 flash('Account created successfully!', 'success')
-                return redirect(url_for('auth.login'))
+                return redirect(url_for('auth.login_jobseeker'))
             except Exception as e:
                 print(f'Error creating account: {str(e)}', 'danger')
                 flash(f'Error creating account: {str(e)}', 'danger')
+        else:
+            print("Form validation failed")
     return render_template('signup_jobseeker.html', form=form)
+
+
+@auth.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+
+        user1 = JobSeeker.query.filter_by(email=email).first()
+
+        user2 = Employer.query.filter_by(email=email).first()
+
+        user = user1 if user1 else user2
+
+        if user and bcrypt.check_password_hash(user.password, password):
+            login_user(user)
+            flash('Login successful!', 'success')
+            if isinstance(user, Employer):
+                return redirect(url_for('job.dashboard_employer'))
+            else:
+                return redirect(url_for('job.dashboard_jobseeker'))
+        else:
+            flash('Invalid email or password.', 'danger')
+
+    return render_template('login.html', form=form)

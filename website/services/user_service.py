@@ -2,6 +2,7 @@ from werkzeug.security import generate_password_hash
 from ..models.user import db, Employer, JobSeeker
 from .. import bcrypt
 
+
 def create_jobseeker(data):
     existing_user = JobSeeker.query.filter_by(email=data['email']).first()
     if existing_user:
@@ -9,7 +10,8 @@ def create_jobseeker(data):
 
     if data['password'] != data['confirm_password']:
         raise ValueError("Passwords do not match")
-    hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+    hashed_password = bcrypt.generate_password_hash(
+        data['password']).decode('utf-8')
     # password_hash = generate_password_hash(data['password'])
     jobseeker = JobSeeker(email=data['email'],
                           password=hashed_password,
@@ -30,12 +32,17 @@ def create_employer(data):
 
     if data['password'] != data['confirm_password']:
         raise ValueError("Passwords do not match")
-    password_hash = generate_password_hash(data['password'])
+
+    hashed_password = bcrypt.generate_password_hash(
+        data['password']).decode('utf-8')
+
     employer = Employer(email=data['email'],
-                        password=password_hash,
+                        password=hashed_password,
+                        company_location=data['company_location'],
                         company_name=data['company_name'],
-                        company_logo=data.get('company_logo'),
-                        company_website=data.get('company_website'))
+                        company_logo=data['company_logo'],
+                        company_website=data['company_website'])
+
     db.session.add(employer)
     db.session.commit()
     return employer

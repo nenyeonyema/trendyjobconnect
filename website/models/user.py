@@ -43,22 +43,18 @@ class Employer(UserMixin, db.Model):
     company_location = db.Column(db.String(150), nullable=False)
     company_logo = db.Column(db.String(150),
                              nullable=True,
-                             default='profile_pics.jpg')
+                             default='logo_pic.jpg')
     company_website = db.Column(db.String(255), nullable=False)
     is_employer = db.Column(db.Boolean, default=True)
     jobs = db.relationship('Job', backref='employer', lazy=True)
 
-    def __init__(self,
-                 email,
-                 password,
-                 company_name,
-                 company_location,
-                 company_logo=None,
-                 company_website=None):
+    def __init__(self, email, password, company_name, company_location,
+                 company_logo, company_website):
         self.email = email
         self.password = password
         self.company_name = company_name
         self.company_logo = company_logo
+        self.company_location = company_location
         self.company_website = company_website
 
 

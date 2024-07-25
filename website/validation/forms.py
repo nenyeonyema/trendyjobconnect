@@ -11,9 +11,13 @@ class EmployerSignupForm(FlaskForm):
     confirm_password = PasswordField(
         'Confirm Password', validators=[DataRequired(),
                                         EqualTo('password')])
+    company_location = StringField('Company Location',
+                                   validators=[DataRequired()])
     company_name = StringField('Company Name', validators=[DataRequired()])
     industry = StringField('Industry', validators=[DataRequired()])
-    company_logo = FileField('Company Logo')
+    company_logo = FileField(
+        'Company Logo',
+        validators=[FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
     company_website = URLField('Company Website', validators=[DataRequired()])
     submit = SubmitField('Sign Up')
 
@@ -45,9 +49,7 @@ class AppliedJobForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField(
-        'Password', validators=[DataRequired(),
-                                Length(min=6, max=30)])
+    password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
 

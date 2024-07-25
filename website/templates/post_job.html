@@ -3,8 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        />
         <link
             href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css"
             rel="stylesheet"
@@ -17,32 +19,32 @@
         />
         <link
             rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         />
         <link
             href="https://fonts.googleapis.com/css?family=Poppins&effect=neon|outline|emboss|shadow-multiple|3d-float"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="../static/styles/signup.jobseeker.css" />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles/signup.jobseeker.css') }}"
+        />
         <title>Post Job Application Form | TrendyJobConnect</title>
     </head>
-<body>
+    <body>
         <nav class="nav-bar">
             <div class="con-logo">
                 <a href="/"
                     ><img
-                        src="../static/images/my-logo/my-logo3.png"
+                        src="{{ url_for('static', filename='images/my-logo/my-logo3.png') }}"
                         alt="logo"
                         class="my-logo"
                         id="logo"
                 /></a>
-                <!-- <h2><a class="font-effect-3d-float logo" style="color: black;" href="#">trendyJobconnect</a></h2> -->
             </div>
-
             <div class="reg">
                 <button class="btn2">Logout</button>
             </div>
-
             <div class="toggle">
                 <a href="#" class="toggle-button">
                     <span class="bar"></span>
@@ -79,93 +81,75 @@
 
         <div class="form-container">
             <h2>Post Job Application Form</h2>
-            <form id="post-job-application-form">
+            <form
+                id="post-job-application-form"
+                method="POST"
+                action="{{ url_for('job.post_job') }}"
+            >
                 <!-- Group 1: Job Details -->
                 <fieldset>
                     <legend>Job Details</legend>
                     <div class="form-group">
-                        <label for="job-title">Job Title</label>
-                        <input
-                            type="text"
-                            id="job-title"
-                            name="job-title"
-                            required
-                        />
+                        {{ form.job_title.label }}<br />
+                        {{ form.job_title(class_="form-control",
+                        placeholder="Enter job title", required=True) }}<br /><br />
                     </div>
                     <div class="form-group">
-                        <label for="company-name">Company Name</label>
-                        <input
-                            type="text"
-                            id="company-name"
-                            name="company-name"
-                            required
-                        />
+                        {{ form.company_name.label }}<br />
+                        {{ form.company_name(class_="form-control",
+                        placeholder="Enter company name", required=True) }}<br /><br />
                     </div>
                     <div class="form-group">
-                        <label for="job-description">Job Description</label>
-                        <textarea
-                            id="job-description"
-                            name="job-description"
-                            rows="4"
-                            required
-                        ></textarea>
+                        {{ form.job_description.label }}<br />
+                        {{ form.job_description(class_="form-control", rows="4",
+                        placeholder="Enter job description", required=True)
+                        }}<br /><br />
                     </div>
                     <div class="form-group">
-                        <label for="responsibilities">Responsibilities</label>
-                        <textarea
-                            id="responsibilities"
-                            name="responsibilities"
-                            rows="4"
-                            required
-                        ></textarea>
+                        {{ form.responsibilities.label }}<br />
+                        {{ form.responsibilities(class_="form-control",
+                        rows="4", placeholder="Enter responsibilities",
+                        required=True) }}<br /><br />
                     </div>
                     <div class="form-group">
-                        <label for="equirements">Requirements</label>
-                        <textarea
-                            id="requirements"
-                            name="requirements"
-                            rows="4"
-                            required
-                        ></textarea>
+                        {{ form.requirements.label }}<br />
+                        {{ form.requirements(class_="form-control", rows="4",
+                        placeholder="Enter requirements", required=True) }}<br /><br />
                     </div>
                     <div class="form-group">
-                        <label for="job-location">Job Location</label>
-                        <input
-                            type="text"
-                            id="job-location"
-                            name="job-location"
-                            required
-                        />
+                        {{ form.job_location.label }}<br />
+                        {{ form.job_location(class_="form-control",
+                        placeholder="Enter job location", required=True) }}<br /><br />
                     </div>
                     <div class="form-group">
-                        <label for="job-type">Job Type</label>
-                        <select id="job-type" name="job-type" required>
-                            <option value="">Select Job Type</option>
-                            <option value="full-time">Full Time</option>
-                            <option value="part-time">Part Time</option>
-                        </select>
+                        {{ form.job_type.label }}<br />
+                        {{ form.job_type(class_="form-control", required=True)
+                        }}<br /><br />
                     </div>
                     <div class="form-group">
-                        <label for="expires-on">Job Expiration</label>
-                        <input
-                            type="date"
-                            id="expires-on"
-                            name="expires-on"
-                            required
-                        />
+                        {{ form.expires_on.label }}<br />
+                        {{ form.expires_on(class_="form-control", required=True)
+                        }}<br /><br />
                     </div>
                     <div class="form-group">
-                        <label for="benefits">Benefits</label>
-                        <textarea
-                            id="benefits"
-                            name="benefits"
-                            rows="4"
-                        ></textarea>
+                        {{ form.benefits.label }}<br />
+                        {{ form.benefits(class_="form-control", rows="4",
+                        placeholder="Enter benefits") }}<br /><br />
                     </div>
                 </fieldset>
 
-                <div class="form-group">
-                    <button type="submit" class="btn">Post Job</button>
+                <div
+                    class="form-group"
+                    style="
+                        width: 100%;
+                        border-radius: 15px;
+                        height: 30px;
+                        background-color: rgb(16, 42, 67);
+                    "
+                >
+                    <button type="submit" class="btn" style="color: white">
+                        Post Job
+                    </button>
                 </div>
             </form>
         </div>
@@ -182,7 +166,6 @@
                     <a href="https://www.linkedin.com/in/chinenyeonyema/"
                         >Contact Us</a
                     >
-                    <!-- <span>Privacy Policy</span> -->
                 </div>
                 <div class="service-arrow">
                     <a href="#home"
@@ -194,11 +177,7 @@
                 </div>
             </div>
         </footer>
-        <script src="../static/scripts/home.js"></script>
-        <script
-            type="text/javascript"
-            src="{{ url_for('static', filename='../static/scripts/home.js') }}"
-        ></script>
+        <script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -206,12 +185,9 @@
         ></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
-
         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         <script>
-            AOS.init({
-                duration: 500,
-            });
+            AOS.init({ duration: 500 });
         </script>
     </body>
 </html>

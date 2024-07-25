@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash
 from ..models.user import db, Employer, JobSeeker
-
+from .. import bcrypt
 
 def create_jobseeker(data):
     existing_user = JobSeeker.query.filter_by(email=data['email']).first()
@@ -9,10 +9,10 @@ def create_jobseeker(data):
 
     if data['password'] != data['confirm_password']:
         raise ValueError("Passwords do not match")
-
-    password_hash = generate_password_hash(data['password'])
+    hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+    # password_hash = generate_password_hash(data['password'])
     jobseeker = JobSeeker(email=data['email'],
-                          password=password_hash,
+                          password=hashed_password,
                           first_name=data['first_name'],
                           last_name=data['last_name'],
                           profile_pic=data['profile_pic'],

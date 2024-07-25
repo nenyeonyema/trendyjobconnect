@@ -3,7 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        />
         <link
             href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css"
             rel="stylesheet"
@@ -14,7 +17,10 @@
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
             crossorigin="anonymous"
         />
-        <link rel="stylesheet" href="../static/styles/signup.jobseeker.css" />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles/signup.jobseeker.css') }}"
+        />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -30,27 +36,36 @@
             <div class="con-logo" id="home">
                 <a href="/"
                     ><img
-                        src="../static/images/my-logo/my-logo3.png"
+                        src="{{ url_for('static', filename='images/my-logo/my-logo3.png') }}"
                         alt="logo"
                         class="my-logo"
                         id="logo"
                 /></a>
-                <!-- <h2><a class="font-effect-3d-float logo" style="color: black;" href="#">trendyJobconnect</a></h2> -->
             </div>
             <ul class="nav-list">
-                <li><a href="/login">Find A Job</a></li>
-                <li><a href="/login">Post A Job</a></li>
+                <li>
+                    <a href="{{ url_for('job.search_jobs')}}">Find A Job</a>
+                </li>
+                <li><a href="#">Post A Job</a></li>
             </ul>
-
             <div class="reg">
                 <button class="btn1">
-                    <a href="/login" class="cleanup">Login</a>
+                    <a
+                        href="{{ url_for('auth.login') }}"
+                        class="cleanup"
+                        style="color: black; font-size: 16px"
+                        >Login</a
+                    >
                 </button>
                 <button class="btn2">
-                    <a href="/signup" class="clear-deco">Sign Up</a>
+                    <a
+                        href="{{ url_for('auth.signup_page') }}"
+                        class="clear-deco"
+                        style="font-size: 16px"
+                        >Sign Up</a
+                    >
                 </button>
             </div>
-
             <div class="toggle">
                 <a href="#" class="toggle-button">
                     <span class="bar"></span>
@@ -64,41 +79,55 @@
         </nav>
         <div class="mobile-nav">
             <ul>
-                <li><a href="/signup">Find A Job</a></li>
-                <li><a href="/login">Post A Job</a></li>
+                <li>
+                    <a href="{{ url_for('auth.signup_page') }}">Find A Job</a>
+                </li>
+                <li><a href="{{ url_for('auth.login') }}">Post A Job</a></li>
                 <li>
                     <button class="btn1">
-                        <a href="/login" class="clear-deco">Login</a>
+                        <a href="{{ url_for('auth.login') }}" class="clear-deco"
+                            >Login</a
+                        >
                     </button>
                 </li>
                 <li>
                     <button class="btn2">
-                        <a href="/signup" class="clear-deco">Sign Up</a>
+                        <a
+                            href="{{ url_for('auth.signup_page') }}"
+                            class="clear-deco"
+                            >Sign Up</a
+                        >
                     </button>
                 </li>
             </ul>
         </div>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="container mt-4">
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                            {{ message }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %}
+        <div class="container mt-4">
+            {% for category, message in messages %}
+            <div
+                class="alert alert-{{ category }} alert-dismissible fade show"
+                role="alert"
+            >
+                {{ message }}
+                <button
+                    type="button"
+                    class="close"
+                    data-dismiss="alert"
+                    aria-label="Close"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
         <div class="form-container">
             <h2>Employer Sign Up</h2>
             <form
                 id="recruiter-signup-form"
-                action="/signup/employer"
                 method="POST"
+                action="{{ url_for('auth.employer_signup') }}"
                 enctype="multipart/form-data"
             >
                 <!-- Group 1: Company Details -->
@@ -106,64 +135,45 @@
                     <legend>Company Details</legend>
                     <br />
                     <div class="form-group">
-                        <label for="company-name">Company Name</label>
-                        <input
-                            type="text"
-                            id="company-name"
-                            name="company-name"
-                            required
-                        />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="company-website">Company Website</label>
-                        <input
-                            type="url"
-                            id="company-website"
-                            name="company-website"
-                            required
-                        />
+                        {{ form.company_name.label }}<br />
+                        {{ form.company_name(class_="form-control",
+                        placeholder="Enter company name", required=True) }}<br /><br />
                     </div>
                     <div class="form-group">
-                        <label for="company-logo">Upload Company Logo</label>
-                        <input
-                            type="file"
-                            id="company-logo"
-                            name="company-logo"
-                            accept="image/*"
-                        />
+                        {{ form.company_website.label }}<br />
+                        {{ form.company_website(class_="form-control",
+                        placeholder="Enter company website", required=True)
+                        }}<br /><br />
                     </div>
                     <div class="form-group">
-                        <label for="industry">Industry/Sector</label>
-                        <input type="text" id="industry" name="industry" />
+                        {{ form.company_logo.label }}<br />
+                        {{ form.company_logo(class_="form-control",
+                        accept="image/*") }}<br /><br />
+                    </div>
+                    <div class="form-group">
+                        {{ form.industry.label }}<br />
+                        {{ form.industry(class_="form-control",
+                        placeholder="Enter industry/sector") }}<br /><br />
                     </div>
                 </fieldset>
-
                 <!-- Group 4: Login Details -->
                 <fieldset>
                     <legend>Login Details</legend>
                     <br />
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required />
+                        {{ form.email.label }}<br />
+                        {{ form.email(class_="form-control", placeholder="Enter
+                        email", required=True) }}<br /><br />
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            required
-                        />
+                        {{ form.password.label }}<br />
+                        {{ form.password(class_="form-control",
+                        placeholder="Enter password", required=True) }}<br /><br />
                     </div>
                     <div class="form-group">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input
-                            type="password"
-                            id="confirm-password"
-                            name="confirm-password"
-                            required
-                        />
+                        {{ form.confirm_password.label }}<br />
+                        {{ form.confirm_password(class_="form-control",
+                        placeholder="Confirm password", required=True) }}<br /><br />
                     </div>
                 </fieldset>
                 <div
@@ -198,7 +208,6 @@
                     <a href="https://www.linkedin.com/in/chinenyeonyema/"
                         >Contact Us</a
                     >
-                    <!-- <span>Privacy Policy</span> -->
                 </div>
                 <div class="service-arrow">
                     <a href="#home"
@@ -210,11 +219,7 @@
                 </div>
             </div>
         </footer>
-        <script src="../static/scripts/home.js"></script>
-        <script
-            type="text/javascript"
-            src="{{ url_for('static', filename='../static/scripts/home.js') }}"
-        ></script>
+        <script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -222,7 +227,6 @@
         ></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
-
         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         <script>
             AOS.init({

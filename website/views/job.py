@@ -19,16 +19,16 @@ def post_job():
 
     if form.validate_on_submit():
         job_data = {
-            'company_name': request.form['company-name'],
-            'title': request.form['job-title'],
-            'description': request.form['job-description'],
-            'responsibilities': request.form['responsibilities'],
-            'requirements': request.form['requirements'],
-            'location': request.form['job-location'],
-            'expires_on': request.form['expires-on'],
-            'industry': request.form['industry'],
-            'type': request.form['job-type'],
-            'benefits': request.form['benefits'],
+            'company_name': form.company_name.data,
+            'title': form.job_title.data,
+            'description': form.job_description.data,
+            'responsibilities': form.responsibilities.data,
+            'requirements': form.requirements.data,
+            'location': form.job_location.data,
+            'expires_on': form.expires_on.data,
+            'industry': form.industry.data,
+            'type': form.job_type.data,
+            'benefits': form.benefits.data,
             'user_id': current_user.id
         }
 
@@ -42,9 +42,9 @@ def post_job():
 def search_jobs():
 
     search_query = request.form.get('search_query', '')
-    
+
     adzuna_jobs = fetch_jobs_from_adzuna(current_app, search_query)
-   
+
     print(adzuna_jobs)
 
     return render_template('list_jobs.html', jobs=adzuna_jobs)

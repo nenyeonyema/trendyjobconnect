@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField
-from wtforms import EmailField, IntegerField, TextAreaField, FileField, SelectField, URLField
+from wtforms import EmailField, IntegerField, TextAreaField, SelectField, URLField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
+from flask_wtf.file import FileField, FileAllowed
 
 
 class EmployerSignupForm(FlaskForm):
@@ -11,6 +12,7 @@ class EmployerSignupForm(FlaskForm):
         'Confirm Password', validators=[DataRequired(),
                                         EqualTo('password')])
     company_name = StringField('Company Name', validators=[DataRequired()])
+    industry = StringField('Industry', validators=[DataRequired()])
     company_logo = FileField('Company Logo')
     company_website = URLField('Company Website', validators=[DataRequired()])
     submit = SubmitField('Sign Up')
@@ -24,7 +26,8 @@ class JobSeekerSignupForm(FlaskForm):
                                         EqualTo('password')])
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
-    current_position = StringField('Company Name', validators=[DataRequired()])
+    current_position = StringField('Current Position',
+                                   validators=[DataRequired()])
     profile_pic = FileField('Profile Picture')
     submit = SubmitField('Sign Up')
 

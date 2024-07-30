@@ -39,29 +39,24 @@
                 /></a>
             </div>
             <ul class="nav-list">
-                <li><a href="{{ url_for('auth.login') }}">Find A Job</a></li>
-                <li><a href="{{ url_for('auth.login') }}">Post A Job</a></li>
+                <li>
+                    <a href="{{ url_for('job.search_jobs') }}"
+                        >Find more Jobs</a
+                    >
+                </li>
             </ul>
             <div class="reg">
-                <button class="btn1">
-                    <a href="{{ url_for('auth.login') }}" class="cleanup"
-                        >Login</a
-                    >
-                </button>
                 <button class="btn2">
-                    <a
-                        href="{{ url_for('auth.signup_page') }}"
-                        class="clear-deco"
-                        >Sign Up</a
+                    <a href="{{ url_for('auth.logout') }}" class="clear-deco"
+                        >Logout</a
                     >
                 </button>
             </div>
             <div class="toggle">
-                <a href="#" class="toggle-button">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </a>
+                <a href="#" class="toggle-button"
+                    ><span class="bar"></span><span class="bar"></span
+                    ><span class="bar"></span
+                ></a>
                 <a href="#" class="closing-bar"
                     ><i class="fa-solid fa-x"></i
                 ></a>
@@ -69,46 +64,47 @@
         </nav>
         <div class="mobile-nav">
             <ul>
-                <li><a href="{{ url_for('auth.login') }}">Find A Job</a></li>
-                <li><a href="{{ url_for('auth.login') }}">Post A Job</a></li>
                 <li>
-                    <button class="btn1">
-                        <a href="{{ url_for('auth.login') }}" class="clear-deco"
-                            >Login</a
-                        >
-                    </button>
+                    <a href="{{ url_for('job.search_jobs') }}">Find A Job</a>
                 </li>
                 <li>
-                    <button class="btn2">
+                    <button class="btn1">
                         <a
-                            href="{{ url_for('auth.signup_page') }}"
+                            href="{{ url_for('auth.logout') }}"
                             class="clear-deco"
-                            >Sign Up</a
+                            >Logout</a
                         >
                     </button>
                 </li>
             </ul>
         </div>
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %}
+        <ul>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
 
         <div class="form-container">
             {% block content %}
             <div class="container">
-                <h1>{{ job.title }}</h1>
-                <p><strong>Company Name:</strong> {{ job.company_name }}</p>
-                <p><strong>Description:</strong> {{ job.description }}</p>
+                <p><strong>Job Title:</strong> <br />{{ job.title }}</p>
                 <p>
-                    <strong>Responsibilities:</strong> {{ job.responsibilities
-                    }}
+                    <strong>Company Name:</strong> <br />{{ job.company_name }}
                 </p>
-                <p><strong>Requirements:</strong> {{ job.requirements }}</p>
-                <p><strong>Location:</strong> {{ job.location }}</p>
-                <p><strong>Type:</strong> {{ job.type }}</p>
-                <p><strong>Expires On:</strong> {{ job.expires_on }}</p>
+                <p><strong>Description:</strong> <br />{{ job.description }}</p>
                 <p>
-                    <strong>Contact:</strong> {{ job.contact_first_name }} {{
-                    job.contact_last_name }} ({{ job.contact_email }})
+                    <strong>Responsibilities:</strong> <br />{{
+                    job.responsibilities }}
                 </p>
-                <p><strong>Position:</strong> {{ job.contact_position }}</p>
+                <p>
+                    <strong>Requirements:</strong> <br />{{ job.requirements }}
+                </p>
+                <p><strong>Location:</strong> <br />{{ job.location }}</p>
+                <p><strong>Type:</strong> <br />{{ job.type }}</p>
+                <p><strong>Expires On:</strong> <br />{{ job.expires_on }}</p>
 
                 <h2>Apply for this Job</h2>
 
@@ -118,35 +114,77 @@
                     action="{{ url_for('job.apply_job', job_id=job.id) }}"
                     enctype="multipart/form-data"
                 >
+                    {{ form.hidden_tag() }}
+
+                    <!-- Display form-wide errors -->
+                    {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        Please correct the errors in the form.
+                    </div>
+                    {% endif %}
+
                     <!-- Group 1: Details -->
                     <fieldset>
                         <legend>Details</legend>
                         <div class="form-group">
                             {{ form.first_name.label }}<br />
                             {{ form.first_name(class_="form-control",
-                            placeholder="Enter first name", required=True) }}<br /><br />
+                            placeholder="Enter first name", required=True) }} {%
+                            if form.first_name.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.first_name.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="form-group">
                             {{ form.middle_name.label }}<br />
                             {{ form.middle_name(class_="form-control",
-                            placeholder="Enter middle name", required=True)
-                            }}<br /><br />
+                            placeholder="Enter middle name", required=True) }}
+                            {% if form.middle_name.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.middle_name.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="form-group">
                             {{ form.last_name.label }}<br />
                             {{ form.last_name(class_="form-control",
-                            placeholder="Enter last name", required=True) }}<br /><br />
+                            placeholder="Enter last name", required=True) }} {%
+                            if form.last_name.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.last_name.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="form-group">
                             {{ form.email.label }}<br />
                             {{ form.email(class_="form-control",
-                            placeholder="Enter email", required=True) }}<br /><br />
+                            placeholder="Enter email", required=True) }} {% if
+                            form.email.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="form-group">
                             {{ form.phone_number.label }}<br />
                             {{ form.phone_number(class_="form-control",
-                            placeholder="Enter phone number", required=True)
-                            }}<br /><br />
+                            placeholder="Enter phone number", required=True) }}
+                            {% if form.phone_number.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.phone_number.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                     </fieldset>
 
@@ -157,12 +195,25 @@
                             {{ form.cover_letter.label }}<br />
                             {{ form.cover_letter(class_="form-control",
                             rows="4", placeholder="Enter cover letter",
-                            required=True) }}<br /><br />
+                            required=True) }} {% if form.cover_letter.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.cover_letter.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="form-group">
                             {{ form.resume.label }}<br />
                             {{ form.resume(class_="form-control",
-                            accept=".pdf,.doc,.docx") }}<br /><br />
+                            accept=".pdf,.doc,.docx") }} {% if
+                            form.resume.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.resume.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
                         </div>
                     </fieldset>
                     <div class="form-group">
@@ -198,6 +249,7 @@
             </div>
         </footer>
         <script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
+
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

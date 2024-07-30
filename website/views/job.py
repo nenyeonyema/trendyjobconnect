@@ -5,37 +5,41 @@ from ..services.job_service import create_job, apply_for_job, get_job_by_id, get
 from ..services.apicalls import fetch_jobs, fetch_jobs_from_adzuna, fetch_jobs_from_joobleapi
 from ..services.user_service import get_jobseeker_by_id, get_employer_by_id
 from ..validation.forms import AppliedJobForm, JobPostForm, JobSearchForm
+from werkzeug.utils import secure_filename
+import os
 
 job = Blueprint('job', __name__)
 
 
-@job.route('/post_job', methods=['GET', 'POST'])
+@job.route('/postjob', methods=['GET', 'POST'])
 @login_required
 def post_job():
-    if not current_user.is_employer:
-        flash('Only employers can post jobs.', 'danger')
-        return redirect(url_for('auth.login'))
+    # if not current_user.is_employer:
+    #     flash('Only employers can post jobs.', 'danger')
+    #     return redirect(url_for('auth.login'))
     form = JobPostForm()
 
-    if form.validate_on_submit():
-        job_data = {
-            'company_name': form.company_name.data,
-            'title': form.job_title.data,
-            'description': form.job_description.data,
-            'responsibilities': form.responsibilities.data,
-            'requirements': form.requirements.data,
-            'location': form.job_location.data,
-            'expires_on': form.expires_on.data,
-            'industry': form.industry.data,
-            'type': form.job_type.data,
-            'benefits': form.benefits.data,
-            'user_id': current_user.id
-        }
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            job_data = {
+                'company_name': form.company_name.data,
+                'title': form.title.data,
+                'email': form.email.data,
+                'description': form.description.data,
+                'responsibilities': form.responsibilities.data,
+                'requirements': form.requirements.data,
+                'location': form.location.data,
+                'expires_on': form.expires_on.data,
+                'industry': form.industry.data,
+                'type': form.job_type.data,
+                'benefits': form.benefits.data,
+                'user_id': current_user.id
+            }
 
-        job = create_job(job_data)
-        flash('Job posted successfully!', 'success')
-        return redirect(url_for('job.dashboard_employer'))
-    return render_template('post_job.html')
+            create_job(job_data)
+            flash('Job posted successfully!', 'success')
+            return redirect(url_for('job.dashboard_employer'))
+    return render_template('post_job.html', form=form)
 
 
 @job.route('/search_jobs', methods=['GET', 'POST'])
@@ -71,28 +75,59 @@ def job_details(job_id):
 @job.route('/apply/<int:job_id>', methods=['GET', 'POST'])
 @login_required
 def apply_job(job_id):
+    # job = Job.query.get_or_404(job_id)
     job = get_job_by_id(job_id)
     if job is None:
         flash('Job not found.', 'danger')
         return redirect(url_for('job.list_jobs'))
+
     form = AppliedJobForm()
-    if form.validate_on_submit():
-        application_data = {
-            'first_name': request.form['first-name'],
-            'middle_name': request.form['middle-name'],
-            'last_name': request.form['last-name'],
-            'email': request.form['email'],
-            'phone_number': request.form['phone-number'],
-            'cover_letter': request.form['cover-letter'],
-            'resume': request.form['resume'],
-            'job_title': job.title,
-            'job_id': job_id,
-            'user_id': current_user.id
-        }
-        apply_for_job(application_data)
-        flash('Application submitted successfully!', 'success')
-        return redirect(url_for('job.dashboard_jobseeker'))
-    return render_template('apply_job.html', form=form, job=job, job_id=job_id)
+
+    if request.method == 'POST':
+
+        if form.validate_on_submit():
+            resume = form.resume.data
+            resume_url = 'resume.pdf'
+
+            if resume:
+                resume_filename = secure_filename(resume.filename)
+                resume_path = os.path.join(current_app.config['UPLOAD_PATH'],
+                                           resume_filename)
+                resume.save(resume_path)
+                resume_url = f'uploads/{resume_filename}'
+
+            # Prepare application data
+            application_data = {
+                'first_name': form.first_name.data,
+                'middle_name': form.middle_name.data,
+                'last_name': form.last_name.data,
+                'email': form.email.data,
+                'phone_number': form.phone_number.data,
+                'cover_letter': form.cover_letter.data,
+                'resume': resume_url,
+                'job_title': job.title,
+                'job_id': job.id,
+                'user_id': current_user.id
+            }
+
+            try:
+                apply_for_job(application_data)
+                flash('Application submitted successfully!', 'success')
+                print('Flash message set: Application submitted successfully!')
+                return redirect(url_for('job.dashboard_jobseeker'))
+            except Exception as e:
+                flash(
+                    f'An error occurred while submitting the application: {e}',
+                    'danger')
+                print(f"Error: {e}")
+
+        else:
+            print(form.errors)
+
+    return render_template('applyjob_form.html',
+                           form=form,
+                           job=job,
+                           job_id=job.id)
 
 
 @job.route('/dashboard/employer', methods=['GET'])
@@ -102,7 +137,9 @@ def dashboard_employer():
     #     flash('Access denied.', 'danger')
     #     return redirect(url_for('auth.login'))
     user = Employer.query.filter_by(id=current_user.id).first()
-    jobs = Job.query.filter_by(user_id=current_user.id).all()
+    jobs = user.jobs
+    # jobs = Job.query.all()
+
     return render_template('dashboard_employer.html', jobs=jobs, user=user)
 
 
@@ -114,10 +151,17 @@ def dashboard_jobseeker():
         return redirect(url_for('auth.login'))
     # user = get_jobseeker_by_id(current_user.id)
     jobs = fetch_jobs(current_app)
-    # applied_jobs = AppliedJob.query.filter_by(user_id=current_user.id).all()
+    inner_jobs = Job.query.all()
+    if not inner_jobs:
+        return ('No  job found')
+    applied_jobs = AppliedJob.query.all()
+
+    for job in applied_jobs:
+        print(job)
     return render_template('dashboard_jobseeker.html',
                            jobs=jobs,
-                           user=current_user)
+                           user=current_user,
+                           inner_jobs=inner_jobs)
 
 
 @job.route('/dashboard_search', methods=['GET', 'POST'])

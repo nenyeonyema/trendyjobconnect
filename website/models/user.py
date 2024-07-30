@@ -8,7 +8,7 @@ class JobSeeker(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(150), nullable=False)
     last_name = db.Column(db.String(150), nullable=False)
-    email = db.Column(db.String(150), unique=True, nullable=False)
+    email = db.Column(db.String(150), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     profile_pic = db.Column(db.String(150),
                             nullable=True,
@@ -63,12 +63,13 @@ class Job(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     company_name = db.Column(db.String(150), nullable=False)
+    email = db.Column(db.String(150), nullable=False)
     description = db.Column(db.Text, nullable=False)
     requirements = db.Column(db.Text, nullable=False)
     responsibilities = db.Column(db.Text, nullable=False)
     location = db.Column(db.String(150), nullable=False)
     type = db.Column(db.String(50), nullable=False)
-    industry = db.Column(db.String(50), nullable=False)
+    industry = db.Column(db.String(100), nullable=False)
     benefits = db.Column(db.Text, nullable=False)
     expires_on = db.Column(db.DateTime, nullable=False)
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
@@ -76,11 +77,12 @@ class Job(db.Model):
                         db.ForeignKey('employer.id'),
                         nullable=False)
 
-    def __init__(self, title, company_name, description, requirements,
+    def __init__(self, title, company_name, email, description, requirements,
                  responsibilities, location, type, expires_on, industry,
                  benefits, user_id):
         self.title = title
         self.company_name = company_name
+        self.email = email
         self.description = description
         self.requirements = requirements
         self.responsibilities = responsibilities
@@ -102,7 +104,7 @@ class AppliedJob(db.Model):
     email = db.Column(db.String(150), nullable=False)
     phone_number = db.Column(db.String(15), nullable=False)
     cover_letter = db.Column(db.Text, nullable=False)
-    resume = db.Column(db.Text, nullable=False)
+    resume = db.Column(db.String(150), nullable=False, default='resume.pdf')
     date_applied = db.Column(db.DateTime, default=datetime.utcnow)
     job_id = db.Column(db.Integer, db.ForeignKey('job.id'), nullable=False)
     user_id = db.Column(db.Integer,

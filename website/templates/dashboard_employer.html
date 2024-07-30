@@ -95,15 +95,20 @@
             <main class="main-content">
                 <section class="actions">
                     <button class="action-btn post-job">
-                        <a href="/postjob" class="clear-deco">Post a Job</a>
+                        <a
+                            href="{{ url_for('job.post_job')}}"
+                            class="clear-deco"
+                            >Post a Job</a
+                        >
                     </button>
                 </section>
                 <section class="job-listings">
                     <h2>Posted Jobs</h2>
+                    {% block content %} {% if jobs %} {% for job in jobs %}
                     <div class="job">
-                        <h3>Job Title:</h3>
-                        <p>Location:</p>
-                        <p>Posted on:</p>
+                        <h3>Job Title: {{ job.title}}</h3>
+                        <p>Location: {{ job.location}}</p>
+                        <p>Expires on: {{ job.expires_on}}</p>
                         <div class="job-actions">
                             <button class="action-btn update-job">
                                 Update
@@ -113,20 +118,9 @@
                             </button>
                         </div>
                     </div>
-                    <div class="job">
-                        <h3>Job Title:</h3>
-                        <p>Location:</p>
-                        <p>Posted on:</p>
-                        <div class="job-actions">
-                            <button class="action-btn update-job">
-                                Update
-                            </button>
-                            <button class="action-btn delete-job">
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                    <!-- More job listings can be added here -->
+                    {% endfor %} {% else %}
+                    <p>No jobs found.</p>
+                    {% endif %} {% endblock %}
                 </section>
             </main>
         </div>
